@@ -1,0 +1,29 @@
+
+.list-group {
+    border-radius: 0;
+    box-shadow: none;
+    -webkit-box-shadow: none;
+}
+
+.list-group-item {
+    border-top: 1px solid #f5f2f2;
+    border-bottom: 1px solid #f5f2f2;
+    background-color: #fbfbfb;
+    border-left: none;
+    border-right:none;
+    text-align: center;
+}
+
+.list-group-item:first-child {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+
+.list-group-item:last-child {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+a.text-success {
+    color: #44c746;
+}
