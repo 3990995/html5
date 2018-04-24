@@ -1,0 +1,25 @@
+.btn-group-justified .btn {
+    text-shadow: none;
+    background-image: none;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    border:none;
+}
+
+.thumbnail {
+    padding: 0;
+    border-bottom: none;
+    border-right: none;
+    border-left: none;
+    box-shadow: none;
+    -webkit-box-shadow: none;
+    border-top-right-radius: 0;
+    border-top-left-radius: 0;
+    -webkit-border-top-left-radius: 0;
+    -webkit-border-top-right-radius: 0;
+}
+
+.thumbnail img {
+    border-radius: 6px;
+}
+
