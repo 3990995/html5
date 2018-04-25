@@ -19,4 +19,9 @@ public class IndexController {
     public String category(){
         return "category";
     }
+
+    @RequestMapping("details")
+    public String details(){
+        return "details";
+    }
 }

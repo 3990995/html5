@@ -10,7 +10,7 @@
     border-bottom: 1px solid #f5f2f2;
     background-color: #fbfbfb;
     border-left: none;
-    border-right:none;
+    border-right: none;
     text-align: center;
 }
 
@@ -26,4 +26,36 @@
 
 a.text-success {
     color: #44c746;
+}
+
+.scrollable {
+    position: relative;
+    height: 250px;
+    margin-top: 10px;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    display: flex;
+}
+
+.scrollable > div {
+    padding-right: 10px;
+}
+
+.scrollable img-rounded {
+    width: auto;
+    height: 250px;
+    max-width: 100%;
+    max-height: 100%;
+}
+
+ul.togglable-tabs > li {
+    width: 33.3333%;
+}
+
+ul.togglable-tabs > li > a {
+    text-align: center;
+}
+
+.rating-xs {
+    font-size: 1em!important;
 }
