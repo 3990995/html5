@@ -30,7 +30,7 @@ a.text-success {
 
 .scrollable {
     position: relative;
-    height: 250px;
+    height: 230px;
     margin-top: 10px;
     overflow-x: scroll;
     overflow-y: hidden;
@@ -43,7 +43,6 @@ a.text-success {
 
 .scrollable img-rounded {
     width: auto;
-    height: 250px;
     max-width: 100%;
     max-height: 100%;
 }
