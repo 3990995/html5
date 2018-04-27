@@ -1,4 +1,4 @@
-package com.liao27;
+package com.liao27.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,12 +16,17 @@ public class IndexController {
     }
 
     @RequestMapping("category")
-    public String category(){
+    public String category() {
         return "category";
     }
 
     @RequestMapping("details")
-    public String details(){
+    public String details() {
         return "details";
+    }
+
+    @RequestMapping("form")
+    public String form() {
+        return "form";
     }
 }
