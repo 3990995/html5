@@ -2,7 +2,9 @@ package com.liao27.model.dto;
 
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.validator.constraints.Length;
 
+import javax.validation.constraints.Max;
 import javax.validation.constraints.NotEmpty;
 
 /**
@@ -25,6 +27,7 @@ public class CategoryReq {
     private Long id;
 
     @NotEmpty(message="类别名: 不能为空")
+    @Length(max = 10,message = "长度不能超过10个字符")
     private String name;
 
     private Long index;

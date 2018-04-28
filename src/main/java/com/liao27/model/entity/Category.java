@@ -21,9 +21,9 @@ public class Category {
     private Long id;
 
     /**
-     *  类别名称
+     * 类别名称
      */
-    @Column
+    @Column(unique = true)
     private String name;
 
     /**
@@ -32,7 +32,8 @@ public class Category {
     @Column
     private int index;
 
-    public Category(){}
+    public Category() {
+    }
 
     public Category(String name, int index) {
         this.name = name;

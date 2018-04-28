@@ -1,5 +1,6 @@
 package com.liao27.services.impl;
 
+import com.liao27.exceptions.BusinessException;
 import com.liao27.model.entity.Category;
 import com.liao27.repositories.CategoryRepository;
 import com.liao27.services.CategoryService;
@@ -20,7 +21,10 @@ public class CategoryServiceImpl implements CategoryService {
     private CategoryRepository categoryRepository;
 
     @Override
-    public Category addCategory(Category category) {
+    public Category addCategory(Category category) throws BusinessException {
+        if (categoryRepository.findFirstByName(category.getName()) != null){
+            throw new BusinessException("分类已经存在");
+        }
         return categoryRepository.save(category);
     }
 }

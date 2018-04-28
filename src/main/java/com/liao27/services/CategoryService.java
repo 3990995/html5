@@ -1,5 +1,6 @@
 package com.liao27.services;
 
+import com.liao27.exceptions.BusinessException;
 import com.liao27.model.entity.Category;
 
 /**
@@ -12,5 +13,5 @@ public interface CategoryService {
      * @param category 分类
      * @return 分类实体
      */
-    Category addCategory(Category category);
+    Category addCategory(Category category) throws BusinessException;
 }
