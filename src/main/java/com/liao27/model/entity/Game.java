@@ -67,6 +67,12 @@ public class Game {
     private Category category;
 
     /**
+     * 视频地址
+     */
+    @Column
+    private String video;
+
+    /**
      * 上传的图片或者视频文件名
      */
     @ElementCollection

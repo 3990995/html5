@@ -49,6 +49,11 @@ public class GameBean {
     private CategoryBean category;
 
     /**
+     * 视频地址
+     */
+    private String video;
+
+    /**
      * 上传的图片或者视频文件名
      */
     private List<String> images;

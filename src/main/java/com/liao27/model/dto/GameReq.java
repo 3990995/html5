@@ -32,6 +32,7 @@ public class GameReq {
      * 游戏图标
      */
     private String logo;
+    private String video;
 
     /**
      * 游戏大小
