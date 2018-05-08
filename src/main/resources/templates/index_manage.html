@@ -22,14 +22,14 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">游戏管理</a>
+            <a class="navbar-brand" href="#">首页管理</a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-                <li><a th:href="@{/index}">首页管理</a></li>
-                <li class="active"><a href="#">游戏管理 <span class="sr-only">(current)</span></a></li>
+                <li class="active"><a href="#">首页管理 <span class="sr-only">(current)</span></a></li>
+                <li><a th:href="@{/game/list}">游戏管理</a></li>
                 <li><a th:href="@{/category/list}">分类管理</a></li>
             </ul>
         </div><!-- /.navbar-collapse -->
@@ -37,38 +37,12 @@
 </nav>
 
 <div class="container-fluid" style="margin: 20px 20px 20px 20px;">
-    <div class="row"><h4>游戏管理</h4></div>
+    <div class="row"><h4>首页数据配置</h4></div>
     <div class="row" th:if="${msg_remove != null}">
         <p class="bg-success" th:text="${msg_remove}">...</p>
     </div>
     <div class="row" th:if="${error_remove != null}">
-        <p class="bg-success" th:text="${error_remove}">...</p>
-    </div>
-    <div class="row" data-example-id="simple-table" th:unless="${#lists.isEmpty(allGames)}">
-        <form th:action="@{/game/remove}" th:object="${gameReq}" th:method="post">
-            <table class="table">
-                <caption>游戏列表</caption>
-                <thead>
-                <tr>
-                    <th>#</th>
-                    <th>分类名称</th>
-                    <th>排序位置</th>
-                    <th>操作</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="c,cStat : ${allGames}">
-                    <td scope="row" th:text="${cStat.count}">1</td>
-                    <td th:text="${c.name}">Category Name</td>
-                    <td th:text="${c.descriptions}">Index</td>
-                    <td>
-                        <button type="submit" class="btn btn-danger btn-xs" name="removeId" th:value="${c.id}"> 删除
-                        </button>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-        </form>
+        <p class="bg-error" th:text="${error_remove}">...</p>
     </div>
 
     <div class="row" th:if="${msg_add != null}">
@@ -77,14 +51,14 @@
 
     <div class="row">
         <div class="bs-example" data-example-id="simple-horizontal-form">
-            <form class="form-horizontal" th:action="@{/game/save}" th:method="post"
-                  enctype="multipart/form-data">
+            <form class="form-horizontal" th:action="@{/index/config}" th:object="${indexBean}" th:method="post">
                 <div class="form-group">
-                    <label for="name" class="col-sm-2 control-label">游戏名称</label>
+                    <label for="categoryId" class="col-sm-2 control-label">类别1</label>
                     <div class="col-sm-10">
-                        <input type="text" name="name" id="name"
-                               class="form-control" placeholder="游戏名称"/>
-                        <span class="help-block bg-danger" th:text="${error_add}"></span>
+                        <select class="form-control" name="categoryId" id="categoryId">
+                            <option th:each="opt : ${allCategories}" th:value="${opt.id}" th:text="${opt.name}">1
+                            </option>
+                        </select>
                     </div>
                 </div>
                 <div class="form-group">

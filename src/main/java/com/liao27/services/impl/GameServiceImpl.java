@@ -9,6 +9,7 @@ import com.liao27.repositories.CategoryRepository;
 import com.liao27.repositories.GameRepository;
 import com.liao27.services.GameService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -52,7 +53,7 @@ public class GameServiceImpl implements GameService {
     }
 
     @Override
-    @Transactional
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
     public Game addGame(MultipartFile logo, MultipartFile video, MultipartFile[] images, String name, Long categoryId, String size, String details, String descriptions) throws BusinessException, IOException {
 
         if (gameRepository.findFirstByName(name)
@@ -77,6 +78,9 @@ public class GameServiceImpl implements GameService {
         if (null != images && images.length > 0) {
             List<String> files = Lists.newArrayList();
             for (MultipartFile file : images) {
+                if (Strings.isEmpty(file.getOriginalFilename())){
+                    continue;
+                }
                 files.add(this.saveFile(file));
             }
             if (files.size() > 0){

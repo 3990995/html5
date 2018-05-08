@@ -24,6 +24,7 @@ import java.util.List;
  */
 @Slf4j
 @Controller
+@RequestMapping("/category")
 public class CategoryController {
 
     @Autowired
@@ -39,7 +40,12 @@ public class CategoryController {
         return this.categoryService.findAll();
     }
 
-    @RequestMapping(value = "/category/list")
+    @RequestMapping
+    public String category() {
+        return "category";
+    }
+
+    @RequestMapping(value = "/list")
     public ModelAndView manage(final CategoryReq categoryReq, ModelAndView model) {
         model.addObject("options", categoryService.getIndexs());
         model.setViewName("/category_manage");
@@ -47,7 +53,7 @@ public class CategoryController {
     }
 
 
-    @RequestMapping(value = "/category/save", method = {RequestMethod.POST})
+    @RequestMapping(value = "/save", method = {RequestMethod.POST})
     public ModelAndView addCategory(ModelAndView model, @Valid @ModelAttribute(value = "categoryReq") CategoryReq categoryReq) {
         Category category = new Category();
         BeanUtils.copyProperties(categoryReq, category);
@@ -66,7 +72,7 @@ public class CategoryController {
         return model;
     }
 
-    @RequestMapping(value = "/category/remove", params = {"removeId"})
+    @RequestMapping(value = "/remove", params = {"removeId"})
     public ModelAndView removeRow(ModelAndView model, final CategoryReq categoryReq, final HttpServletRequest req) {
         boolean flag;
         final Long removeId = Long.valueOf(req.getParameter("removeId"));

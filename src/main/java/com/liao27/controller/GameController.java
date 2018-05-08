@@ -1,38 +1,26 @@
 package com.liao27.controller;
 
 import com.liao27.exceptions.BusinessException;
-import com.liao27.model.dto.CategoryBean;
-import com.liao27.model.dto.CategoryReq;
-import com.liao27.model.dto.GameBean;
 import com.liao27.model.dto.GameReq;
-import com.liao27.model.entity.Category;
-import com.liao27.model.entity.Game;
 import com.liao27.services.CategoryService;
 import com.liao27.services.GameService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
-import java.io.File;
-import java.io.IOException;
-import java.util.List;
-import java.util.Map;
 
 /**
  * Created by main on 2018/5/4.
  */
 @Slf4j
 @Controller
+@RequestMapping("/game")
 public class GameController {
 
     @Autowired
@@ -41,7 +29,7 @@ public class GameController {
     @Autowired
     private CategoryService categoryService;
 
-    @RequestMapping(value = "/game/list")
+    @RequestMapping(path = {"/list","/",""})
     public ModelAndView manage(ModelAndView model) {
         model.addObject("allGames", this.gameService.findAll());
         model.addObject("allCategories", this.categoryService.findAll());
@@ -49,7 +37,7 @@ public class GameController {
         return model;
     }
 
-    @RequestMapping(value = "/game/save", method = {RequestMethod.POST})
+    @RequestMapping(value = "/save", method = {RequestMethod.POST})
     public ModelAndView addGame(
             @RequestParam("logo") MultipartFile logo,
             @RequestParam("video") MultipartFile video,
@@ -72,11 +60,11 @@ public class GameController {
             model.addObject("error_add", e.getMessage());
         }
 
-        model.setViewName("redirect:/game/list");
+        model.setViewName("redirect:/game");
         return model;
     }
 
-    @RequestMapping(value = "/game/remove", params = {"removeId"})
+    @RequestMapping(value = "/remove", params = {"removeId"})
     public ModelAndView removeRow(ModelAndView model, final GameReq gameReq, final HttpServletRequest req) {
         boolean flag;
         final Long removeId = Long.valueOf(req.getParameter("removeId"));
@@ -93,7 +81,7 @@ public class GameController {
         } catch (BusinessException e) {
             model.addObject("error_remove", "删除游戏失败:" + e.getMessage());
         }
-        model.setViewName("redirect:/game/list");
+        model.setViewName("redirect:/game");
         return model;
     }
 
