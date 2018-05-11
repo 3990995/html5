@@ -67,11 +67,11 @@ public class GameServiceImpl implements GameService {
         game.setDescriptions(descriptions);
         game.setSize(size);
 
-        if (logo != null) {
+        if (logo != null && Strings.isNotEmpty(logo.getOriginalFilename())) {
             game.setLogo(this.saveFile(logo));
         }
 
-        if (video != null) {
+        if (video != null && Strings.isNotEmpty(video.getOriginalFilename())) {
             game.setVideo(this.saveFile(video));
         }
 
@@ -115,22 +115,11 @@ public class GameServiceImpl implements GameService {
 
     @Override
     public List<GameBean> findAll() {
-        List<Game> list = gameRepository.findAll();
-        return copyProperties(list);
+        return GameBean.builds(gameRepository.findAll());
     }
 
     public List<GameBean> findAllByCategoryId(Long categoryId) {
-        List<Game> list = gameRepository.findAllByCategoryId(categoryId);
-        return copyProperties(list);
+        return GameBean.builds(gameRepository.findAllByCategoryId(categoryId));
     }
 
-    private List<GameBean> copyProperties(List<Game> games) {
-        List<GameBean> beans = Lists.newArrayList();
-        for (Game game : games) {
-            GameBean bean = new GameBean();
-            BeanUtils.copyProperties(game, bean);
-            beans.add(bean);
-        }
-        return beans;
-    }
 }

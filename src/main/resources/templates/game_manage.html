@@ -51,16 +51,16 @@
                 <thead>
                 <tr>
                     <th>#</th>
-                    <th>分类名称</th>
-                    <th>排序位置</th>
+                    <th>名称</th>
+                    <th>游戏简介</th>
                     <th>操作</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr th:each="c,cStat : ${allGames}">
                     <td scope="row" th:text="${cStat.count}">1</td>
-                    <td th:text="${c.name}">Category Name</td>
-                    <td th:text="${c.descriptions}">Index</td>
+                    <td th:text="${c.name}">Game Name</td>
+                    <td th:text="${c.details}">Index</td>
                     <td>
                         <button type="submit" class="btn btn-danger btn-xs" name="removeId" th:value="${c.id}"> 删除
                         </button>
@@ -91,7 +91,7 @@
                     <label for="categoryId" class="col-sm-2 control-label">所属类别</label>
                     <div class="col-sm-10">
                         <select class="form-control" name="categoryId" id="categoryId">
-                            <option th:each="opt : ${allCategories}" th:value="${opt.id}" th:text="${opt.name}">1
+                            <option th:each="opt : ${allCategories}" th:value="${opt.id}" th:text="${opt.name}">
                             </option>
                         </select>
                     </div>

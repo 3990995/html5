@@ -1,11 +1,15 @@
 package com.liao27.model.dto;
 
 import com.google.common.collect.Lists;
-import com.liao27.model.entity.Category;
+import com.liao27.model.entity.Game;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
 
-import javax.persistence.*;
+import java.lang.reflect.Array;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -14,7 +18,7 @@ import java.util.List;
  */
 @Slf4j
 @Data
-public class GameBean {
+public class GameBean implements Comparable<GameBean> {
 
     private Long id;
 
@@ -57,4 +61,30 @@ public class GameBean {
      * 上传的图片或者视频文件名
      */
     private List<String> images;
+
+    public static GameBean build(Game game) {
+        if (game == null) {
+            return null;
+        }
+        GameBean gameBean = new GameBean();
+        BeanUtils.copyProperties(game, gameBean);
+        return gameBean;
+    }
+
+    public static List<GameBean> builds(Collection<Game> games) {
+        if (games == null) {
+            return null;
+        }
+        List<GameBean> list = Lists.newArrayList();
+        for (Game game : games) {
+            list.add(GameBean.build(game));
+        }
+        list.sort(Comparator.comparing(GameBean::getId));
+        return list;
+    }
+
+    @Override
+    public int compareTo(GameBean o) {
+        return this.getId().compareTo(o.getId());
+    }
 }

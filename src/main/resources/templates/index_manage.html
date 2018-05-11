@@ -16,7 +16,8 @@
     <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
                 <span class="sr-only">Toggle navigation</span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
@@ -44,7 +45,6 @@
     <div class="row" th:if="${error_remove != null}">
         <p class="bg-error" th:text="${error_remove}">...</p>
     </div>
-
     <div class="row" th:if="${msg_add != null}">
         <p class="bg-success" th:text="${msg_add}">...</p>
     </div>
@@ -53,82 +53,65 @@
         <div class="bs-example" data-example-id="simple-horizontal-form">
             <form class="form-horizontal" th:action="@{/index/config}" th:object="${indexBean}" th:method="post">
                 <div class="form-group">
-                    <label for="categoryId" class="col-sm-2 control-label">类别1</label>
+                    <label for="category1" class="col-sm-2 control-label">类别1</label>
                     <div class="col-sm-10">
-                        <select class="form-control" name="categoryId" id="categoryId">
-                            <option th:each="opt : ${allCategories}" th:value="${opt.id}" th:text="${opt.name}">1
+                        <select class="form-control" th:field="*{category1.id}">
+                            <option value="">请选择</option>
+                            <option th:each="opt : ${allCategories}" th:value="${opt.id}" th:text="${opt.name}">
                             </option>
                         </select>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="categoryId" class="col-sm-2 control-label">所属类别</label>
+                    <label for="category2" class="col-sm-2 control-label">类别2</label>
                     <div class="col-sm-10">
-                        <select class="form-control" name="categoryId" id="categoryId">
-                            <option th:each="opt : ${allCategories}" th:value="${opt.id}" th:text="${opt.name}">1
+                        <select class="form-control" th:field="*{category2.id}">
+                            <option value="">请选择</option>
+                            <option th:each="opt : ${allCategories}" th:value="${opt.id}" th:text="${opt.name}">
                             </option>
                         </select>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="size" class="col-sm-2 control-label">大小</label>
+                    <label for="category3" class="col-sm-2 control-label">类别3</label>
                     <div class="col-sm-10">
-                        <input type="text" name="size" id="size"
-                               class="form-control" placeholder="游戏文件尺寸大小"/>
-                        <span class="help-block bg-danger"></span>
+                        <select class="form-control" th:field="*{category3.id}">
+                            <option value="">请选择</option>
+                            <option th:each="opt : ${allCategories}" th:value="${opt.id}" th:text="${opt.name}">
+                            </option>
+                        </select>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="details" class="col-sm-2 control-label">简单描述</label>
+                    <label for="category4" class="col-sm-2 control-label">类别4</label>
                     <div class="col-sm-10">
-                        <input type="text" name="details" id="details"
-                               class="form-control" placeholder="一句话简单介绍一下游戏"/>
-                        <span class="help-block bg-danger"></span>
+                        <select class="form-control" th:field="*{category4.id}">
+                            <option value="">请选择</option>
+                            <option th:each="opt : ${allCategories}" th:value="${opt.id}" th:text="${opt.name}">
+                            </option>
+                        </select>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="descriptions" class="col-sm-2 control-label">游戏介绍</label>
+                    <label class="col-sm-2 control-label">游戏推荐</label>
                     <div class="col-sm-10">
-                        <textarea class="form-control" name="descriptions" id="descriptions" style="resize: none;" rows="3"
-                                  placeholder="游戏内容介绍"></textarea>
-                        <span class="help-block bg-danger"></span>
+                        <div class="checkbox" th:each="game:${allGames}">
+                            <label>
+                                <input type="checkbox" th:field="*{gameList1[__${gameStat.index}__].id}" th:value="${game.id}"/>
+                                <span th:text="${game.name}"></span>
+                            </label>
+                        </div>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="logo" class="col-sm-2 control-label">游戏 logo 上传</label>
+                    <label class="col-sm-2 control-label">推荐精品</label>
                     <div class="col-sm-10">
-                        <input type="file" name="logo" id="logo" class="form-control"/>
-                        <p class="help-block">选择正方形的游戏 logo，无需圆角</p>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="video" class="col-sm-2 control-label">游戏介绍视频</label>
-                    <div class="col-sm-10">
-                        <input type="file" name="video" id="video" class="form-control"/>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-2 control-label">游戏介绍图片</label>
-                    <div class="col-sm-10">
-                        <input type="file" name="images" class="form-control"/>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-2 control-label hidden-xs"></label>
-                    <div class="col-sm-10">
-                        <input type="file" name="images" class="form-control"/>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-2 control-label hidden-xs"></label>
-                    <div class="col-sm-10">
-                        <input type="file" name="images" class="form-control"/>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-2 control-label hidden-xs"></label>
-                    <div class="col-sm-10">
-                        <input type="file" name="images" class="form-control"/>
+                        <div class="checkbox" th:each="game:${allGames}">
+                            <label>
+                                <input type="checkbox" th:field="*{gameList2[__${gameStat.index}__].id}" th:value="${game.id}"/>
+                                <span th:text="${game.name}"></span>
+                            </label>
+                        </div>
                     </div>
                 </div>
                 <div class="form-group">

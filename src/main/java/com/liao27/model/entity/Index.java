@@ -44,13 +44,13 @@ public class Index {
     /**
      * 首页第一部分的游戏列表
      */
-    @OneToMany(fetch = FetchType.EAGER)
-    private Set<Game> gameList1 = Sets.newHashSet();
+    @OneToMany(fetch = FetchType.EAGER ,cascade = CascadeType.ALL,mappedBy = "index1")
+    private Set<Game> gameList1;
 
     /**
      * 首页第2部分的游戏列表[精品推荐]
      */
-    @OneToMany(fetch = FetchType.EAGER)
+    @OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL,mappedBy = "index2")
     private Set<Game> gameList2 = Sets.newHashSet();
 
 }

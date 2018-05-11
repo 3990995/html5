@@ -25,97 +25,52 @@
             <a href="#" th:href="@{/category}" class="btn btn-default" role="button">更多</a>
         </div>
     </div>
-    <div class="row">
+    <div class="row" th:if="${indexBean.gameList1.size() ge 1}">
         <div class="col-sm-12 col-md-12" style="padding-top:8px;padding-left: 0;padding-right: 0;">
-            <div class="thumbnail">
-                <h4>王者荣耀</h4>
-                <p>游戏内容的剪短介绍</p>
-                <img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1524551596104&di=80fcddbfaa317bbc443aadf2ff1eae68&imgtype=0&src=http%3A%2F%2Fi2.hdslb.com%2Fbfs%2Farchive%2F890ea0f49e0ab759c650d42780d5b31f8ff15392.jpg" />
+            <div class="thumbnail" th:object="${indexBean.gameList1[0]}">
+                <h4 th:text="*{name}">王者荣耀</h4>
+                <p th:text="*{details}">游戏内容的剪短介绍</p>
+                <img th:src="|@{/}html/*{images[0]}|" />
             </div>
         </div>
     </div>
-    <div class="row">
-        <div class="media">
-            <div class="media-left">
-                <a href="#">
-                    <img class="media-object" style="width: 64px; height: 64px; border-radius: 10px;" src="https://ss1.baidu.com/6ONXsjip0QIZ8tyhnq/it/u=2348652421,1529514209&fm=58&bpow=512&bpoh=512"/>
-                </a>
-            </div>
-            <div class="media-body" style="vertical-align: middle;">
-                <h4 class="media-heading">魂斗罗</h4>
-                童年回忆 | 官方正版 | 一名通关
-            </div>
-            <div class="media-right media-middle">
-                <input class="btn btn-default" type="button" value="进入"/>
-            </div>
-        </div>
+    <div class="row" th:if="${indexBean.gameSubList.size() > 0}">
+        <ul class="media-list">
+            <li class="media" th:each="game : ${indexBean.gameSubList}">
+                <div class="media-left">
+                    <a href="#">
+                        <img class="media-object" th:src="|@{/}html/${game.logo}|" style="width: 64px; height: 64px; border-radius: 10px;"/>
+                    </a>
+                </div>
+                <div class="media-body" style="vertical-align: middle;">
+                    <h4 class="media-heading" th:text="${game.name}">魂斗罗</h4>
+                    <span th:text="${game.details}">童年回忆 | 官方正版 | 一名通关</span>
+                </div>
+                <div class="media-right media-middle">
+                    <input class="btn btn-default" type="button" value="进入"/>
+                </div>
+            </li>
+        </ul>
     </div>
-    <div class="row" style="border-top: 1px solid #eee;margin-top: 16px">
+    <div class="row" style="border-top: 1px solid #eee;margin-top: 16px" th:if="${indexBean.gameList2.size() > 0}">
         <h4>推荐精品</h4>
     </div>
-    <div class="row">
+    <div class="row" th:if="${indexBean.gameList2.size() > 0}">
         <ul class="media-list">
-
-            <li class="media">
+            <li class="media" th:each="game : ${indexBean.gameList2}">
                 <div class="media-left">
                     <a href="#">
-                        <img class="media-object" style="width: 64px; height: 64px; border-radius: 10px;" src="http://qgcdn1.gtimg.com/plat/appdirgame/images/app_ico/10785_icon_01.png"/>
+                        <img class="media-object" th:src="|@{/}html/${game.logo}|" style="width: 64px; height: 64px; border-radius: 10px;"/>
                     </a>
                 </div>
                 <div class="media-body" style="vertical-align: middle;">
-                    <h4 class="media-heading">龙神契约</h4>
-                    精美的贴图制作、将让玩家获得超越观看3D电影的真实体验！
+                    <h4 class="media-heading" th:text="${game.name}">龙神契约</h4>
+                    <span th:text="${game.details}">童年回忆 | 官方正版 | 一名通关</span>
                 </div>
                 <div class="media-right media-middle">
                     <input class="btn btn-default" type="button" value="进入"/>
                 </div>
             </li>
-
-            <li class="media">
-                <div class="media-left">
-                    <a href="#">
-                        <img class="media-object" style="width: 64px; height: 64px; border-radius: 10px;" src="http://qgcdn3.gtimg.com/plat/appdirgame/images/app_ico/30242_icon_01.png"/>
-                    </a>
-                </div>
-                <div class="media-body" style="vertical-align: middle;">
-                    <h4 class="media-heading">Once'</h4>
-                    游戏的画面非常的精美
-                </div>
-                <div class="media-right media-middle">
-                    <input class="btn btn-default" type="button" value="进入"/>
-                </div>
-            </li>
-
-            <li class="media">
-                <div class="media-left">
-                    <a href="#">
-                        <img class="media-object" style="width: 64px; height: 64px; border-radius: 10px;" src="http://qgcdn3.gtimg.com/plat/appdirgame/images/app_ico/10826_icon_01.png"/>
-                    </a>
-                </div>
-                <div class="media-body" style="vertical-align: middle;">
-                    <h4 class="media-heading">魔域</h4>
-                    以魔幻风格为主，恢弘大气中不乏精致。
-                </div>
-                <div class="media-right media-middle">
-                    <input class="btn btn-default" type="button" value="进入"/>
-                </div>
-            </li>
-
-            <li class="media">
-                <div class="media-left">
-                    <a href="#">
-                        <img class="media-object" style="width: 64px; height: 64px; border-radius: 10px;" src="http://qgcdn1.gtimg.com/plat/appdirgame/images/app_ico/32766_icon_01.png"/>
-                    </a>
-                </div>
-                <div class="media-body" style="vertical-align: middle;">
-                    <h4 class="media-heading">QQ升级</h4>
-                    保留原来积分升级的玩法，优化游戏界面及出牌体验。
-                </div>
-                <div class="media-right media-middle">
-                    <input class="btn btn-default" type="button" value="进入"/>
-                </div>
-            </li>
-
         </ul>
     </div>
 

@@ -75,8 +75,55 @@ public class Game {
     /**
      * 上传的图片或者视频文件名
      */
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "t_game_images", joinColumns = @JoinColumn(name = "game_id"))
     @Column(name = "images")
     private List<String> images = Lists.newArrayList();
+
+    /**
+     * 第一部分推荐
+     */
+    @ManyToOne(cascade = {CascadeType.REFRESH, CascadeType.MERGE})
+    @JoinColumn(name = "index1_id")
+    private Index index1;
+
+
+    /**
+     * 第2部分推荐
+     */
+    @ManyToOne(cascade = {CascadeType.REFRESH, CascadeType.MERGE})
+    @JoinColumn(name = "index2_id")
+    private Index index2;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+
+        Game game = (Game) o;
+
+        if (id != null ? !id.equals(game.id) : game.id != null) return false;
+        if (name != null ? !name.equals(game.name) : game.name != null) return false;
+        if (logo != null ? !logo.equals(game.logo) : game.logo != null) return false;
+        if (size != null ? !size.equals(game.size) : game.size != null) return false;
+        if (details != null ? !details.equals(game.details) : game.details != null) return false;
+        if (descriptions != null ? !descriptions.equals(game.descriptions) : game.descriptions != null) return false;
+        if (category != null ? !category.equals(game.category) : game.category != null) return false;
+        return video != null ? video.equals(game.video) : game.video == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = super.hashCode();
+        result = 31 * result + (id != null ? id.hashCode() : 0);
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (logo != null ? logo.hashCode() : 0);
+        result = 31 * result + (size != null ? size.hashCode() : 0);
+        result = 31 * result + (details != null ? details.hashCode() : 0);
+        result = 31 * result + (descriptions != null ? descriptions.hashCode() : 0);
+        result = 31 * result + (category != null ? category.hashCode() : 0);
+        result = 31 * result + (video != null ? video.hashCode() : 0);
+        return result;
+    }
 }
