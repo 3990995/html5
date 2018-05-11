@@ -48,4 +48,11 @@ public interface GameService {
      * @throws IOException io异常
      */
     Game addGame(MultipartFile logo, MultipartFile video, MultipartFile[] images, String name, Long categoryId, String size, String details, String descriptions) throws BusinessException, IOException;
+
+    /**
+     * 根据 id 查找游戏
+     * @param gameId 游戏 id
+     * @return 游戏数据
+     */
+    GameBean getGame(Long gameId);
 }

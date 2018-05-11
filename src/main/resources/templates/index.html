@@ -38,7 +38,7 @@
         <ul class="media-list">
             <li class="media" th:each="game : ${indexBean.gameSubList}">
                 <div class="media-left">
-                    <a href="#">
+                    <a href="#" th:href="|@{/game/show}/${game.id}|">
                         <img class="media-object" th:src="|@{/}html/${game.logo}|" style="width: 64px; height: 64px; border-radius: 10px;"/>
                     </a>
                 </div>
@@ -59,7 +59,7 @@
         <ul class="media-list">
             <li class="media" th:each="game : ${indexBean.gameList2}">
                 <div class="media-left">
-                    <a href="#">
+                    <a href="#" th:href="|@{/game/show}/${game.id}|">
                         <img class="media-object" th:src="|@{/}html/${game.logo}|" style="width: 64px; height: 64px; border-radius: 10px;"/>
                     </a>
                 </div>

@@ -15,13 +15,18 @@ import java.util.List;
 @Repository
 public interface GameRepository extends JpaRepository<Game, Long> {
 
+    @EntityGraph(value="graph.Game.images",type= EntityGraph.EntityGraphType.FETCH)
+    Game getOne(Long id);
+
     /**
      * 根据名字查找游戏
      *
      * @param name 游戏名
      * @return 游戏实体
      */
+    @EntityGraph(value="graph.Game.images",type= EntityGraph.EntityGraphType.FETCH)
     Game findFirstByName(String name);
+
 
     /**
      * 根据类别查找游戏列表
@@ -29,6 +34,7 @@ public interface GameRepository extends JpaRepository<Game, Long> {
      * @param categoryId
      * @return 列表
      */
+    @EntityGraph(value="graph.Game.images",type= EntityGraph.EntityGraphType.FETCH)
     List<Game> findAllByCategoryId(Long categoryId);
 
     /**

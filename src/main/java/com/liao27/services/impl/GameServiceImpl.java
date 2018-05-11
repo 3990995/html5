@@ -1,6 +1,7 @@
 package com.liao27.services.impl;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 import com.liao27.exceptions.BusinessException;
 import com.liao27.model.dto.GameBean;
 import com.liao27.model.entity.Category;
@@ -22,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 
@@ -76,7 +78,7 @@ public class GameServiceImpl implements GameService {
         }
 
         if (null != images && images.length > 0) {
-            List<String> files = Lists.newArrayList();
+            Set<String> files = Sets.newHashSet();
             for (MultipartFile file : images) {
                 if (Strings.isEmpty(file.getOriginalFilename())){
                     continue;
@@ -122,4 +124,12 @@ public class GameServiceImpl implements GameService {
         return GameBean.builds(gameRepository.findAllByCategoryId(categoryId));
     }
 
+    @Override
+    public GameBean getGame(Long gameId) {
+        Game game = gameRepository.getOne(gameId);
+        if (game.getImages().size() > 1){
+            System.out.println(game.getImages());
+        }
+        return GameBean.build(game);
+    }
 }

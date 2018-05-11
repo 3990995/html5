@@ -3,20 +3,19 @@ package com.liao27.controller;
 import com.liao27.exceptions.BusinessException;
 import com.liao27.model.dto.CategoryBean;
 import com.liao27.model.dto.CategoryReq;
+import com.liao27.model.dto.GameBean;
 import com.liao27.model.entity.Category;
 import com.liao27.services.CategoryService;
+import com.liao27.services.GameService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -27,13 +26,13 @@ import java.util.List;
 @RequestMapping("/category")
 public class CategoryController {
 
+    private CategoryBean currentCategoryBean;
+
+    @Autowired
+    private GameService gameService;
+
     @Autowired
     private CategoryService categoryService;
-
-    @ModelAttribute("options")
-    public ArrayList<String> options() {
-        return categoryService.getIndexs();
-    }
 
     @ModelAttribute("allCategories")
     public List<CategoryBean> categoryBeanList() {
@@ -41,8 +40,25 @@ public class CategoryController {
     }
 
     @RequestMapping
-    public String category() {
-        return "category";
+    public ModelAndView category(ModelAndView model) {
+        if (this.currentCategoryBean == null){
+            List<CategoryBean> list = this.categoryService.findAll();
+            if (list.size() > 0){
+                this.currentCategoryBean = list.get(0);
+            }
+        }
+        List<GameBean> gblist = this.gameService.findAllByCategoryId(this.currentCategoryBean.getId());
+        model.addObject("gameList",gblist);
+        model.addObject("currentCategoryBean",this.currentCategoryBean);
+        model.setViewName("category");
+        return model;
+    }
+
+    @RequestMapping("/list/{categoryId}")
+    public ModelAndView gameListByCategoryId(@PathVariable("categoryId") Long categoryId,ModelAndView model){
+        this.currentCategoryBean = this.categoryService.getCategory(categoryId);
+        model.setViewName("redirect:/category");
+        return model;
     }
 
     @RequestMapping(value = "/list")
@@ -68,6 +84,7 @@ public class CategoryController {
             log.error(e.getMessage());
             model.addObject("error_add", e.getMessage());
         }
+        model.addObject("options", categoryService.getIndexs());
         model.setViewName("redirect:/category/list");
         return model;
     }
@@ -89,6 +106,7 @@ public class CategoryController {
         } catch (BusinessException e) {
             model.addObject("error_remove", "删除分类失败:" + e.getMessage());
         }
+        model.addObject("options", categoryService.getIndexs());
         model.setViewName("redirect:/category/list");
         return model;
     }

@@ -4,13 +4,12 @@ import com.google.common.collect.Lists;
 import com.liao27.model.entity.Game;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.BeanUtils;
 
+import javax.persistence.Column;
 import java.lang.reflect.Array;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 /**
  * 游戏介绍
@@ -48,6 +47,16 @@ public class GameBean implements Comparable<GameBean> {
     private String descriptions;
 
     /**
+     * 总评分
+     */
+    private Float starTotal;
+
+    /**
+     * 版本信息
+     */
+    private String versionInfo;
+
+    /**
      * 所属类别
      */
     private CategoryBean category;
@@ -60,7 +69,21 @@ public class GameBean implements Comparable<GameBean> {
     /**
      * 上传的图片或者视频文件名
      */
-    private List<String> images;
+    private Set<String> images;
+
+    public String getVersionInfo(){
+        if (Strings.isEmpty(this.versionInfo)){
+            return "最新版本：9.2 近7天：9.3 Android：9.5 iOS：9.4";
+        }
+        return this.versionInfo;
+    }
+
+    public Float getStarTotal(){
+        if (this.starTotal == null){
+            return 10f;
+        }
+        return this.starTotal;
+    }
 
     public static GameBean build(Game game) {
         if (game == null) {

@@ -1,11 +1,11 @@
 package com.liao27.model.entity;
 
-import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.Set;
 
 /**
  * 游戏介绍
@@ -60,6 +60,18 @@ public class Game {
     private String descriptions;
 
     /**
+     * 总评分
+     */
+    @Column
+    private Float starTotal;
+
+    /**
+     * 版本信息
+     */
+    @Column
+    private String versionInfo;
+
+    /**
      * 所属类别
      */
     @ManyToOne(cascade = {CascadeType.REFRESH, CascadeType.MERGE})
@@ -78,7 +90,7 @@ public class Game {
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "t_game_images", joinColumns = @JoinColumn(name = "game_id"))
     @Column(name = "images")
-    private List<String> images = Lists.newArrayList();
+    private Set<String> images = Sets.newHashSet();
 
     /**
      * 第一部分推荐

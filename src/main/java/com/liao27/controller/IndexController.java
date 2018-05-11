@@ -73,9 +73,6 @@ public class IndexController {
         return model;
     }
 
-    @RequestMapping("details")
-    public String details() {
-        return "details";
-    }
+
 
 }

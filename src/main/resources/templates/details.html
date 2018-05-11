@@ -16,42 +16,35 @@
 </head>
 <body>
 
-<div class="container-fluid" style="margin: 20px 20px 20px 20px;padding-bottom: 100px">
+<div class="container-fluid" style="margin: 20px 20px 20px 20px;padding-bottom: 100px" th:if="${game != null}">
     <div class="row">
         <div class="media">
             <div class="media-left">
                 <a href="#">
                     <img class="media-object img-rounded" style="width: 80px; height: 80px;"
+                         th:src="|@{/html/}${game.logo}|"
                          src="https://ss1.baidu.com/6ONXsjip0QIZ8tyhnq/it/u=94146511,29205277&fm=58&bpow=392&bpoh=392"/>
                 </a>
             </div>
             <div class="media-body" style="vertical-align: middle;">
-                <h4 class="media-heading">王者荣耀</h4>
-                <h5>875.8M</h5>
-                游戏的画面非常的精美
+                <h4 class="media-heading" th:text="${game.name}">王者荣耀</h4>
+                <h5 th:text="${game.size}">875.8M</h5>
+                <span th:text="${game.details}">游戏的画面非常的精美</span>
             </div>
         </div>
     </div>
     <div class="row scrollable">
-        <div>
+        <div th:if="${game.video != null}">
             <video class="img-rounded"
                    poster="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1524647560334&di=cd2a8e3d260496cda53c4109bd37c94b&imgtype=0&src=http%3A%2F%2Fuploads.5068.com%2Fallimg%2F171101%2F1-1G101092048.jpg"
                    controls="controls" preload="none">
-                <source src="http://video.fgt.cc/o_1cbta0a5dqq135s1r2u1srr1rer7.mp4"/>
+                <source th:src="|@{/html/}${game.video}|" src="http://video.fgt.cc/o_1cbta0a5dqq135s1r2u1srr1rer7.mp4"/>
             </video>
         </div>
-        <div>
-            <!--<i class="icon-camera-retro icon-2x"/>-->
+        <div th:each="img : ${game.images}">
             <img class="img-rounded"
+                 th:src="|@{/html/}${img}|"
                  src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=1854818290,2750494906&fm=27&gp=0.jpg"/>
-        </div>
-        <div>
-            <img class="img-rounded"
-                 src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1524551596104&di=80fcddbfaa317bbc443aadf2ff1eae68&imgtype=0&src=http%3A%2F%2Fi2.hdslb.com%2Fbfs%2Farchive%2F890ea0f49e0ab759c650d42780d5b31f8ff15392.jpg"/>
-        </div>
-        <div>
-            <img class="img-rounded"
-                 src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1524551596104&di=80fcddbfaa317bbc443aadf2ff1eae68&imgtype=0&src=http%3A%2F%2Fi2.hdslb.com%2Fbfs%2Farchive%2F890ea0f49e0ab759c650d42780d5b31f8ff15392.jpg"/>
         </div>
     </div>
     <div class="row" style="padding-top: 8px;">
@@ -65,15 +58,13 @@
         </ul>
         <div class="tab-content">
             <div role="tabpanel" class="tab-pane fade " id="home" aria-labelledby="home-tab" style="padding-top: 10px">
-                <p>《王者荣耀》是全球首款5V5英雄公平对战手游，腾讯最新MOBA手游大作！ 作为一款MOBA类游戏，《王者荣耀》特色多多，在同类的游戏中可谓是一枝独秀，艳压全场。
-
-                    5V5王者峡谷、5V5深渊大乱斗、以及3V3、1V1等多样模式一键体验，热血竞技尽享快感！海量英雄随心选择，精妙配合默契作战！10秒实时跨区匹配，与好友组队登顶最强王者！操作简单易上手，一血、五杀、超神，极致还原经典体验！实力操作公平对战，回归MOBA初心！ </p>
+                <p th:text="${game.descriptions}">游戏介绍</p>
             </div>
             <div role="tabpanel" class="tab-pane active fade in" id="profile" aria-labelledby="profile-tab"
                  style="padding-top: 10px">
-                <input id="input-id" type="text" value="9.5" data-size="xs"/>
-                <div class="caption" id="star-caption"><span class="label label-default"> 7.5 </span></div>
-                <div class="text-muted" style="border-bottom: 1px solid #eee;padding-bottom: 15px">最新版本：9.2 近7天：9.3
+                <input id="input-id" type="text" value="9.5"  th:value="${game.starTotal}" data-size="xs"/>
+                <div class="caption" id="star-caption"><span class="label label-default" th:text="${game.starTotal}"> 7.5 </span></div>
+                <div class="text-muted" th:text="${game.versionInfo}" style="border-bottom: 1px solid #eee;padding-bottom: 15px">最新版本：9.2 近7天：9.3
                     Android：9.5 iOS：9.4
                 </div>
                 <ul class="media-list" style="padding-top: 20px">

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
     <meta charset="UTF-8"/>
     <title>Game</title>
@@ -17,259 +18,32 @@
     <div class="row">
         <div style="width: 20%;float: left;position: fixed;">
             <div class="list-group">
-                <a href="#" class="list-group-item">畅销榜</a>
-                <a href="#" class="list-group-item text-success">新游榜</a>
-                <a href="#" class="list-group-item">休闲</a>
-                <a href="#" class="list-group-item">棋牌</button>
-                <a href="#" class="list-group-item">角色</a>
-                <a href="#" class="list-group-item">竞技</a>
-                <a href="#" class="list-group-item">动作</a>
-                <a href="#" class="list-group-item">单机</a>
+                <a href="#" class="list-group-item"
+                   th:each="category : ${allCategories}"
+                   th:href="|@{/category/list}/${category.id}|"
+                   th:classappend="${currentCategoryBean.id == category.id} ? 'text-success':''"
+                   th:text="${category.name}"> 畅销榜
+                </a>
             </div>
         </div>
         <div style="width:80%;float: right;padding-left: 10px">
-            <ul class="media-list">
-
-                <li class="media">
+            <ul class="media-list" th:if="${gameList.size() > 0}">
+                <li class="media" th:each="game : ${gameList}">
                     <div class="media-left">
-                        <a href="#">
-                            <img class="media-object img-rounded" style="width: 64px; height: 64px;" src="http://qgcdn1.gtimg.com/plat/appdirgame/images/app_ico/10785_icon_01.png"/>
+                        <a href="#" th:href="|@{/game/show}/${game.id}|">
+                            <img class="media-object img-rounded" style="width: 64px; height: 64px;"
+                                 th:src="|@{/html/}${game.logo}|"
+                                 src="http://qgcdn1.gtimg.com/plat/appdirgame/images/app_ico/10785_icon_01.png"/>
                         </a>
                     </div>
                     <div class="media-body" style="vertical-align: middle;">
-                        <h4 class="media-heading">龙神契约</h4>
-                        让玩家获得超越观看3D电影的真实体验！
+                        <h4 class="media-heading" th:text="${game.name}">龙神契约</h4>
+                        <span th:text="${game.details}">让玩家获得超越观看3D电影的真实体验！</span>
                     </div>
                     <div class="media-right media-middle">
                         <input class="btn btn-default" type="button" value="进入"/>
                     </div>
                 </li>
-
-                <li class="media">
-                    <div class="media-left">
-                        <a href="#">
-                            <img class="media-object" style="width: 64px; height: 64px; border-radius: 10px;" src="http://qgcdn3.gtimg.com/plat/appdirgame/images/app_ico/30242_icon_01.png"/>
-                        </a>
-                    </div>
-                    <div class="media-body" style="vertical-align: middle;">
-                        <h4 class="media-heading">Once'</h4>
-                        游戏的画面非常的精美
-                    </div>
-                    <div class="media-right media-middle">
-                        <input class="btn btn-default" type="button" value="进入"/>
-                    </div>
-                </li>
-
-                <li class="media">
-                    <div class="media-left">
-                        <a href="#">
-                            <img class="media-object" style="width: 64px; height: 64px; border-radius: 10px;" src="http://qgcdn3.gtimg.com/plat/appdirgame/images/app_ico/10826_icon_01.png"/>
-                        </a>
-                    </div>
-                    <div class="media-body" style="vertical-align: middle;">
-                        <h4 class="media-heading">魔域</h4>
-                        以魔幻风格为主，恢弘大气中不乏精致。
-                    </div>
-                    <div class="media-right media-middle">
-                        <input class="btn btn-default" type="button" value="进入"/>
-                    </div>
-                </li>
-
-                <li class="media">
-                    <div class="media-left">
-                        <a href="#">
-                            <img class="media-object" style="width: 64px; height: 64px; border-radius: 10px;" src="http://qgcdn1.gtimg.com/plat/appdirgame/images/app_ico/32766_icon_01.png"/>
-                        </a>
-                    </div>
-                    <div class="media-body" style="vertical-align: middle;">
-                        <h4 class="media-heading">QQ升级</h4>
-                        保留原积分升级玩法，优化界面及出牌体验。
-                    </div>
-                    <div class="media-right media-middle">
-                        <input class="btn btn-default" type="button" value="进入"/>
-                    </div>
-                </li>
-
-                <li class="media">
-                    <div class="media-left">
-                        <a href="#">
-                            <img class="media-object img-rounded" style="width: 64px; height: 64px;" src="http://qgcdn1.gtimg.com/plat/appdirgame/images/app_ico/10785_icon_01.png"/>
-                        </a>
-                    </div>
-                    <div class="media-body" style="vertical-align: middle;">
-                        <h4 class="media-heading">龙神契约</h4>
-                        让玩家获得超越观看3D电影的真实体验！
-                    </div>
-                    <div class="media-right media-middle">
-                        <input class="btn btn-default" type="button" value="进入"/>
-                    </div>
-                </li>
-
-                <li class="media">
-                    <div class="media-left">
-                        <a href="#">
-                            <img class="media-object" style="width: 64px; height: 64px; border-radius: 10px;" src="http://qgcdn3.gtimg.com/plat/appdirgame/images/app_ico/30242_icon_01.png"/>
-                        </a>
-                    </div>
-                    <div class="media-body" style="vertical-align: middle;">
-                        <h4 class="media-heading">Once'</h4>
-                        游戏的画面非常的精美
-                    </div>
-                    <div class="media-right media-middle">
-                        <input class="btn btn-default" type="button" value="进入"/>
-                    </div>
-                </li>
-
-                <li class="media">
-                    <div class="media-left">
-                        <a href="#">
-                            <img class="media-object" style="width: 64px; height: 64px; border-radius: 10px;" src="http://qgcdn3.gtimg.com/plat/appdirgame/images/app_ico/10826_icon_01.png"/>
-                        </a>
-                    </div>
-                    <div class="media-body" style="vertical-align: middle;">
-                        <h4 class="media-heading">魔域</h4>
-                        以魔幻风格为主，恢弘大气中不乏精致。
-                    </div>
-                    <div class="media-right media-middle">
-                        <input class="btn btn-default" type="button" value="进入"/>
-                    </div>
-                </li>
-
-                <li class="media">
-                    <div class="media-left">
-                        <a href="#">
-                            <img class="media-object" style="width: 64px; height: 64px; border-radius: 10px;" src="http://qgcdn1.gtimg.com/plat/appdirgame/images/app_ico/32766_icon_01.png"/>
-                        </a>
-                    </div>
-                    <div class="media-body" style="vertical-align: middle;">
-                        <h4 class="media-heading">QQ升级</h4>
-                        保留原积分升级玩法，优化界面及出牌体验。
-                    </div>
-                    <div class="media-right media-middle">
-                        <input class="btn btn-default" type="button" value="进入"/>
-                    </div>
-                </li>
-
-                <li class="media">
-                    <div class="media-left">
-                        <a href="#">
-                            <img class="media-object img-rounded" style="width: 64px; height: 64px;" src="http://qgcdn1.gtimg.com/plat/appdirgame/images/app_ico/10785_icon_01.png"/>
-                        </a>
-                    </div>
-                    <div class="media-body" style="vertical-align: middle;">
-                        <h4 class="media-heading">龙神契约</h4>
-                        让玩家获得超越观看3D电影的真实体验！
-                    </div>
-                    <div class="media-right media-middle">
-                        <input class="btn btn-default" type="button" value="进入"/>
-                    </div>
-                </li>
-
-                <li class="media">
-                    <div class="media-left">
-                        <a href="#">
-                            <img class="media-object" style="width: 64px; height: 64px; border-radius: 10px;" src="http://qgcdn3.gtimg.com/plat/appdirgame/images/app_ico/30242_icon_01.png"/>
-                        </a>
-                    </div>
-                    <div class="media-body" style="vertical-align: middle;">
-                        <h4 class="media-heading">Once'</h4>
-                        游戏的画面非常的精美
-                    </div>
-                    <div class="media-right media-middle">
-                        <input class="btn btn-default" type="button" value="进入"/>
-                    </div>
-                </li>
-
-                <li class="media">
-                    <div class="media-left">
-                        <a href="#">
-                            <img class="media-object" style="width: 64px; height: 64px; border-radius: 10px;" src="http://qgcdn3.gtimg.com/plat/appdirgame/images/app_ico/10826_icon_01.png"/>
-                        </a>
-                    </div>
-                    <div class="media-body" style="vertical-align: middle;">
-                        <h4 class="media-heading">魔域</h4>
-                        以魔幻风格为主，恢弘大气中不乏精致。
-                    </div>
-                    <div class="media-right media-middle">
-                        <input class="btn btn-default" type="button" value="进入"/>
-                    </div>
-                </li>
-
-                <li class="media">
-                    <div class="media-left">
-                        <a href="#">
-                            <img class="media-object" style="width: 64px; height: 64px; border-radius: 10px;" src="http://qgcdn1.gtimg.com/plat/appdirgame/images/app_ico/32766_icon_01.png"/>
-                        </a>
-                    </div>
-                    <div class="media-body" style="vertical-align: middle;">
-                        <h4 class="media-heading">QQ升级</h4>
-                        保留原积分升级玩法，优化界面及出牌体验。
-                    </div>
-                    <div class="media-right media-middle">
-                        <input class="btn btn-default" type="button" value="进入"/>
-                    </div>
-                </li>
-
-                <li class="media">
-                    <div class="media-left">
-                        <a href="#">
-                            <img class="media-object img-rounded" style="width: 64px; height: 64px;" src="http://qgcdn1.gtimg.com/plat/appdirgame/images/app_ico/10785_icon_01.png"/>
-                        </a>
-                    </div>
-                    <div class="media-body" style="vertical-align: middle;">
-                        <h4 class="media-heading">龙神契约</h4>
-                        让玩家获得超越观看3D电影的真实体验！
-                    </div>
-                    <div class="media-right media-middle">
-                        <input class="btn btn-default" type="button" value="进入"/>
-                    </div>
-                </li>
-
-                <li class="media">
-                    <div class="media-left">
-                        <a href="#">
-                            <img class="media-object" style="width: 64px; height: 64px; border-radius: 10px;" src="http://qgcdn3.gtimg.com/plat/appdirgame/images/app_ico/30242_icon_01.png"/>
-                        </a>
-                    </div>
-                    <div class="media-body" style="vertical-align: middle;">
-                        <h4 class="media-heading">Once'</h4>
-                        游戏的画面非常的精美
-                    </div>
-                    <div class="media-right media-middle">
-                        <input class="btn btn-default" type="button" value="进入"/>
-                    </div>
-                </li>
-
-                <li class="media">
-                    <div class="media-left">
-                        <a href="#">
-                            <img class="media-object" style="width: 64px; height: 64px; border-radius: 10px;" src="http://qgcdn3.gtimg.com/plat/appdirgame/images/app_ico/10826_icon_01.png"/>
-                        </a>
-                    </div>
-                    <div class="media-body" style="vertical-align: middle;">
-                        <h4 class="media-heading">魔域</h4>
-                        以魔幻风格为主，恢弘大气中不乏精致。
-                    </div>
-                    <div class="media-right media-middle">
-                        <input class="btn btn-default" type="button" value="进入"/>
-                    </div>
-                </li>
-
-                <li class="media">
-                    <div class="media-left">
-                        <a href="#">
-                            <img class="media-object" style="width: 64px; height: 64px; border-radius: 10px;" src="http://qgcdn1.gtimg.com/plat/appdirgame/images/app_ico/32766_icon_01.png"/>
-                        </a>
-                    </div>
-                    <div class="media-body" style="vertical-align: middle;">
-                        <h4 class="media-heading">QQ升级</h4>
-                        保留原积分升级玩法，优化界面及出牌体验。
-                    </div>
-                    <div class="media-right media-middle">
-                        <input class="btn btn-default" type="button" value="进入"/>
-                    </div>
-                </li>
-
             </ul>
         </div>
     </div>

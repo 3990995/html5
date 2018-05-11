@@ -1,22 +1,17 @@
 package com.liao27.controller;
 
 import com.liao27.exceptions.BusinessException;
-import com.liao27.model.dto.CategoryBean;
 import com.liao27.model.dto.GameReq;
 import com.liao27.services.CategoryService;
 import com.liao27.services.GameService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 
 /**
  * Created by main on 2018/5/4.
@@ -37,6 +32,14 @@ public class GameController {
         model.addObject("allGames", this.gameService.findAll());
         model.addObject("allCategories", this.categoryService.findAll());
         model.setViewName("/game_manage");
+        return model;
+    }
+
+
+    @RequestMapping("/show/{gameId}")
+    public ModelAndView showGame(ModelAndView model, @PathVariable("gameId") Long gameId){
+        model.addObject("game",this.gameService.getGame(gameId));
+        model.setViewName("details");
         return model;
     }
 

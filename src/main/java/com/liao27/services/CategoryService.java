@@ -38,4 +38,11 @@ public interface CategoryService {
      * @return 删除是否成功
      */
     boolean remove(Long id) throws BusinessException;
+
+    /**
+     * 根据类别查找类别数据
+     * @param categoryId 类别 id
+     * @return 类别数据
+     */
+    CategoryBean getCategory(Long categoryId);
 }
