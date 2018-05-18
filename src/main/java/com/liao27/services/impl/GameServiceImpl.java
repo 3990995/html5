@@ -9,6 +9,7 @@ import com.liao27.model.entity.Game;
 import com.liao27.repositories.CategoryRepository;
 import com.liao27.repositories.GameRepository;
 import com.liao27.services.GameService;
+import com.liao27.utils.FileUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.BeanUtils;
@@ -22,9 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 
 /**
@@ -47,51 +46,44 @@ public class GameServiceImpl implements GameService {
     @Autowired
     private CategoryRepository categoryRepository;
 
-    private String saveFile(MultipartFile file) throws IOException {
-        String ofn = file.getOriginalFilename();
-        String fileName = UUID.randomUUID().toString() + ofn.substring(ofn.lastIndexOf("."));
-        file.transferTo(new File(this.uploadLocation + fileName));
-        return fileName;
-    }
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public Game addGame(MultipartFile logo, MultipartFile video, MultipartFile[] images, String name, Long categoryId, String size, String details, String descriptions) throws BusinessException, IOException {
-
-        if (gameRepository.findFirstByName(name)
+    public Game addGame(MultipartFile logo, MultipartFile video, MultipartFile[] images, GameBean gameBean) throws BusinessException, IOException {
+        if (gameBean == null) {
+            throw new IllegalArgumentException("数据不完整");
+        }
+        if (gameRepository.findFirstByName(gameBean.getName())
                 != null) {
             throw new BusinessException("游戏已经存在");
         }
 
         Game game = new Game();
-        game.setName(name);
-        game.setDetails(details);
-        game.setDescriptions(descriptions);
-        game.setSize(size);
+        BeanUtils.copyProperties(gameBean, game);
 
         if (logo != null && Strings.isNotEmpty(logo.getOriginalFilename())) {
-            game.setLogo(this.saveFile(logo));
+            game.setLogo(FileUtil.saveFile(this.uploadLocation, logo));
         }
 
         if (video != null && Strings.isNotEmpty(video.getOriginalFilename())) {
-            game.setVideo(this.saveFile(video));
+            game.setVideo(FileUtil.saveFile(this.uploadLocation, video));
         }
 
         if (null != images && images.length > 0) {
             Set<String> files = Sets.newHashSet();
             for (MultipartFile file : images) {
-                if (Strings.isEmpty(file.getOriginalFilename())){
+                if (Strings.isEmpty(file.getOriginalFilename())) {
                     continue;
                 }
-                files.add(this.saveFile(file));
+                files.add(FileUtil.saveFile(this.uploadLocation, file));
             }
-            if (files.size() > 0){
+            if (files.size() > 0) {
                 game.setImages(files);
             }
         }
-        if (categoryId != null && categoryId > 0){
-            Category category = categoryRepository.getOne(categoryId);
-            if (category != null){
+        if (gameBean.getCategory() != null && gameBean.getCategory().getId() > 0) {
+            Category category = categoryRepository.getOne(gameBean.getCategory().getId());
+            if (category != null) {
                 game.setCategory(category);
             }
         }
@@ -120,16 +112,18 @@ public class GameServiceImpl implements GameService {
         return GameBean.builds(gameRepository.findAll());
     }
 
+    @Override
     public List<GameBean> findAllByCategoryId(Long categoryId) {
         return GameBean.builds(gameRepository.findAllByCategoryId(categoryId));
     }
 
     @Override
+    public List<GameBean> recommend(Long categoryId, Long excludeGameId) {
+        return GameBean.builds(gameRepository.findTop4ByCategoryIdAndIdNotIn(categoryId, excludeGameId));
+    }
+
+    @Override
     public GameBean getGame(Long gameId) {
-        Game game = gameRepository.getOne(gameId);
-        if (game.getImages().size() > 1){
-            System.out.println(game.getImages());
-        }
-        return GameBean.build(game);
+        return GameBean.build(gameRepository.getOne(gameId));
     }
 }

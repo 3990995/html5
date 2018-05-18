@@ -18,6 +18,12 @@ public class CategoryBean {
 
     private Long index;
 
+    public CategoryBean(){}
+
+    public CategoryBean(Long categoryId) {
+        this.id = categoryId;
+    }
+
     public static CategoryBean build(Category category) {
         if (category == null) {
             return null;

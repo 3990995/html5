@@ -1,6 +1,7 @@
 package com.liao27.model.dto;
 
 import com.google.common.collect.Lists;
+import com.liao27.model.entity.Comment;
 import com.liao27.model.entity.Game;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
@@ -67,9 +68,19 @@ public class GameBean implements Comparable<GameBean> {
     private String video;
 
     /**
+     * 游戏下载地址
+     */
+    private String download;
+
+    /**
      * 上传的图片或者视频文件名
      */
     private Set<String> images;
+
+    /**
+     * 评论列表
+     */
+    private List<CommentBean> commentList = Lists.newArrayList();
 
     public String getVersionInfo(){
         if (Strings.isEmpty(this.versionInfo)){
@@ -90,7 +101,19 @@ public class GameBean implements Comparable<GameBean> {
             return null;
         }
         GameBean gameBean = new GameBean();
-        BeanUtils.copyProperties(game, gameBean);
+        BeanUtils.copyProperties(game, gameBean,"commentList");
+        if (game.getCommentList() != null && game.getCommentList().size() > 0){
+            List<CommentBean> list = Lists.newArrayList();
+            for (Comment c: game.getCommentList()) {
+                if (c != null){
+                    list.add(CommentBean.build(c));
+                }
+            }
+            gameBean.setCommentList(list);
+        }
+        if (game.getCategory() != null){
+            gameBean.setCategory(CategoryBean.build(game.getCategory()));
+        }
         return gameBean;
     }
 

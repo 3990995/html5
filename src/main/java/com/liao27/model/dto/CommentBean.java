@@ -1,6 +1,7 @@
 package com.liao27.model.dto;
 
 import com.google.common.base.Strings;
+import com.liao27.model.Type;
 import com.liao27.model.entity.Comment;
 import com.liao27.utils.DateUtil;
 import lombok.Data;
@@ -23,9 +24,29 @@ public class CommentBean {
     private Long id;
 
     /**
+     * 玩家昵称
+     */
+    private String name;
+
+    /**
      * 评论内容
      */
     private String content;
+
+    /**
+     * 头像
+     */
+    private String headImage;
+
+    /**
+     * 评论类别
+     */
+    private Type type;
+
+    /**
+     * 打分
+     */
+    private Float star;
 
     /**
      * 游戏id

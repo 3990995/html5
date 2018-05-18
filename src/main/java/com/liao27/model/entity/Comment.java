@@ -1,5 +1,6 @@
 package com.liao27.model.entity;
 
+import com.liao27.model.Type;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.jpa.domain.Specification;
@@ -25,52 +26,77 @@ public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "comment_id", nullable = false)
-    public Long id;
+    private Long id;
+
+    /**
+     * 玩家昵称
+     */
+    @Column
+    private String name;
+
+    /**
+     * 头像
+     */
+    @Column
+    private String headImage;
+
+    /**
+     * 打分
+     */
+    @Column
+    private Float star;
+
+    /**
+     * 评论类别
+     */
+    @Column(name = "type", length = 30)
+    @Enumerated(EnumType.STRING)
+    private Type type;
 
     /**
      * 评论内容
      */
     @Lob
     @Column
-    public String content;
+    private String content;
 
     /**
-     * 动态id
+     * 游戏id
      */
     @ManyToOne(cascade = {CascadeType.REFRESH, CascadeType.MERGE})
-    @JoinColumn(name = "category_id")
-    public Category category;
+    @JoinColumn(name = "game_id")
+    private Game game;
 
     /**
      * 评论id 父节点
      */
     @ManyToOne
-    public Comment parent;
+    private Comment parent;
 
     /**
      * 评论 id 爷爷节点
      */
     @ManyToOne
-    public Comment grandpa;
+    private Comment grandpa;
 
     /**
      * 儿子们
      */
     @OneToMany(mappedBy = "parent", fetch = FetchType.LAZY)
-    public List<Comment> comments;
+    private List<Comment> comments;
 
     /**
      * 孙子们
      */
     @OneToMany(mappedBy = "grandpa", fetch = FetchType.LAZY)
-    public List<Comment> grandchildren;
+    private List<Comment> grandchildren;
 
     /**
      * 评论时间
      */
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "comment_date", nullable = false)
-    public Date commentTime;
+    private Date commentTime;
 
     /**
      * 获取指定 commentid 的子评论
@@ -114,7 +140,7 @@ public class Comment {
     public int hashCode() {
         int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (content != null ? content.hashCode() : 0);
-        result = 31 * result + (category != null ? category.hashCode() : 0);
+        result = 31 * result + (game != null ? game.hashCode() : 0);
         result = 31 * result + (parent != null ? parent.hashCode() : 0);
         result = 31 * result + (grandpa != null ? grandpa.hashCode() : 0);
         result = 31 * result + (comments != null ? comments.hashCode() : 0);

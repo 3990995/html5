@@ -1,10 +1,13 @@
 package com.liao27.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -85,6 +88,11 @@ public class Game {
     private String video;
 
     /**
+     * 游戏下载地址
+     */
+    private String download;
+
+    /**
      * 上传的图片或者视频文件名
      */
     @ElementCollection(fetch = FetchType.EAGER)
@@ -107,6 +115,12 @@ public class Game {
     @JoinColumn(name = "index2_id")
     private Index index2;
 
+    /**
+     * 评论列表
+     */
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "game")
+    public List<Comment> commentList = Lists.newArrayList();
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -121,7 +135,6 @@ public class Game {
         if (size != null ? !size.equals(game.size) : game.size != null) return false;
         if (details != null ? !details.equals(game.details) : game.details != null) return false;
         if (descriptions != null ? !descriptions.equals(game.descriptions) : game.descriptions != null) return false;
-        if (category != null ? !category.equals(game.category) : game.category != null) return false;
         return video != null ? video.equals(game.video) : game.video == null;
     }
 
@@ -134,7 +147,6 @@ public class Game {
         result = 31 * result + (size != null ? size.hashCode() : 0);
         result = 31 * result + (details != null ? details.hashCode() : 0);
         result = 31 * result + (descriptions != null ? descriptions.hashCode() : 0);
-        result = 31 * result + (category != null ? category.hashCode() : 0);
         result = 31 * result + (video != null ? video.hashCode() : 0);
         return result;
     }

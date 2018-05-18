@@ -50,6 +50,7 @@ public class Category {
         this.index = index;
     }
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

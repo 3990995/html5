@@ -19,60 +19,84 @@
 <body>
 
 <div class="container-fluid" style="margin: 20px 20px 20px 20px;padding-bottom: 100px" th:if="${game != null}">
+    <div class="row" th:if="${commentBean != null}">
+        <p class="bg-success">添加成功</p>
+    </div>
     <div class="row">
         <div class="media">
             <div class="media-left">
                 <a href="#">
-                    <img class="media-object img-rounded" style="width: 80px; height: 80px;"
+                    <img class="media-object img-rounded" style="width: 70px; height: 70px;"
                          th:src="|@{/html/}${game.logo}|"
                          src="https://ss1.baidu.com/6ONXsjip0QIZ8tyhnq/it/u=94146511,29205277&fm=58&bpow=392&bpoh=392"/>
                 </a>
             </div>
             <div class="media-body" style="vertical-align: middle;">
-                <h4 class="media-heading" th:text="${game.name}">王者荣耀</h4>
+                <h5 class="media-heading" th:text="${game.name}">王者荣耀</h5>
                 <h5 th:text="${game.size}">875.8M</h5>
                 <span th:text="${game.details}">游戏的画面非常的精美</span>
             </div>
         </div>
     </div>
-    <div class="row scrollable">
-        <div th:if="${game.video != null}">
-            <video class="img-rounded"
-                   poster="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1524647560334&di=cd2a8e3d260496cda53c4109bd37c94b&imgtype=0&src=http%3A%2F%2Fuploads.5068.com%2Fallimg%2F171101%2F1-1G101092048.jpg"
-                   controls="controls" preload="none">
-                <source th:src="|@{/html/}${game.video}|" src="http://video.fgt.cc/o_1cbta0a5dqq135s1r2u1srr1rer7.mp4"/>
-            </video>
-        </div>
-        <div th:each="img : ${game.images}">
-            <img class="img-rounded"
-                 th:src="|@{/html/}${img}|"
-                 src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=1854818290,2750494906&fm=27&gp=0.jpg"/>
-        </div>
-    </div>
+    <hr/>
     <div class="row" style="padding-top: 8px;">
+        <div class="bs-example" data-example-id="simple-horizontal-form">
+            <form class="form-horizontal" th:action="|@{/comment/save/}${game.id}|" th:method="post"
+                  enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="type" class="col-sm-2 control-label">评论类型</label>
+                    <div class="col-sm-10">
+                        <select class="form-control" name="type" id="type">
+                            <option th:each="t:${types}" th:value="${t}" th:text="${t.desc}"></option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="name" class="col-sm-2 control-label">昵称</label>
+                    <div class="col-sm-10">
+                        <input type="text" name="name" id="name"
+                               class="form-control" placeholder="玩家昵称"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="headImage" class="col-sm-2 control-label">用户头像</label>
+                    <div class="col-sm-10">
+                        <input type="file" name="headImage" id="headImage" class="form-control"/>
+                        <p class="help-block">选择正方形的图片，无需圆角</p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="star" class="col-sm-2 control-label">打分</label>
+                    <div class="col-sm-10">
+                        <select class="form-control" name="star" id="star">
+                            <option value="0" th:each="s:${stars}" th:value="${s}" th:text="|${s}分|">0分</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="content" class="col-sm-2 control-label">评论内容</label>
+                    <div class="col-sm-10">
+                                <textarea class="form-control" name="content" id="content"
+                                          style="resize: none;" rows="3"
+                                          placeholder="评论内容"></textarea>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-success" style="width: 100%">添加评论</button>
+            </form>
+        </div>
+        <hr/>
+
         <ul class="nav nav-tabs togglable-tabs" role="tablist">
-            <li role="presentation" class=""><a href="#home" role="tab" data-toggle="tab" aria-controls="home"
-                                                aria-expanded="true">详情</a></li>
-            <li role="presentation" class="active"><a href="#profile" role="tab" data-toggle="tab"
-                                                      aria-controls="profile" aria-expanded="false">评价</a></li>
-            <li role="presentation" class=""><a href="#dropdown1" role="tab" data-toggle="tab" aria-controls="profile"
-                                                aria-expanded="false">部落</a></li>
+            <li role="presentation" class="active"><a href="#home" role="tab" data-toggle="tab" aria-controls="home"
+                                                      aria-expanded="true">评论管理</a></li>
+            <li role="presentation" class=""><a href="#profile" role="tab" data-toggle="tab"
+                                                aria-controls="profile" aria-expanded="false">部落管理</a></li>
         </ul>
         <div class="tab-content">
-            <div role="tabpanel" class="tab-pane fade " id="home" aria-labelledby="home-tab" style="padding-top: 10px">
-                <p th:text="${game.descriptions}">游戏介绍</p>
-            </div>
-            <div role="tabpanel" class="tab-pane active fade in" id="profile" aria-labelledby="profile-tab"
+            <div role="tabpanel" class="tab-pane active fade in" id="home" aria-labelledby="home-tab"
                  style="padding-top: 10px">
-                <input id="input-id" type="text" value="9.5" th:value="${game.starTotal}" data-size="xs"/>
-                <div class="caption" id="star-caption"><span class="label label-default" th:text="${game.starTotal}"> 7.5 </span>
-                </div>
-                <div class="text-muted" th:text="${game.versionInfo}"
-                     style="border-bottom: 1px solid #eee;padding-bottom: 15px">最新版本：9.2 近7天：9.3
-                    Android：9.5 iOS：9.4
-                </div>
                 <ul class="media-list" style="padding-top: 20px">
-                    <li class="media" th:each="cm : ${game.commentList}" th:if="${cm.type.name() == 'USER'}">
+                    <li class="media" th:each="cm:${userComments}">
                         <div class="media-left">
                             <a href="#">
                                 <img class="media-object img-circle"
@@ -88,10 +112,10 @@
                     </li>
                 </ul>
             </div>
-            <div role="tabpanel" class="tab-pane fade" id="dropdown1" aria-labelledby="dropdown1-tab"
+            <div role="tabpanel" class="tab-pane fade" id="profile" aria-labelledby="dropdown1-tab"
                  style="padding-top: 10px">
                 <ul class="media-list" style="padding-top: 20px">
-                    <li class="media" th:each="cm : ${game.commentList}" th:if="${cm.type.name() == 'GROUP'}">
+                    <li class="media" th:each="cm:${groupComments}">
                         <div class="media-left">
                             <a href="#">
                                 <img class="media-object img-circle"
@@ -108,22 +132,6 @@
                 </ul>
             </div>
         </div>
-    </div>
-    <div class="row" style="border-top: 1px solid #eee;margin-top: 16px" th:if="${recommend != null}">
-        <h5>你也适合玩</h5>
-    </div>
-    <div class="row" th:if="${recommend != null}">
-        <div class="col-md-3 col-xs-3 col-xs-3" style="align-content: center" th:each="g:${recommend}">
-            <img class="media-object img-circle"
-                 th:src="|@{/html/}${g.logo}|"
-                 style="width: 48px; height: 48px;"><span th:text="${g.name}">游戏名字</span>
-        </div>
-    </div>
-</div>
-<div class="panel panel-default"
-     style="position:fixed;bottom:0;margin-bottom:0;width: 100%;-webkit-border-radius:0 ;-moz-border-radius:0 ;border-radius: 0;">
-    <div class="panel-body">
-        <a th:href="${game.download}" target="_blank" class="btn btn-success btn-lg" style="width: 100%">下载</a>
     </div>
 </div>
 

@@ -33,6 +33,7 @@ public class GameReq {
      */
     private String logo;
     private String video;
+    private String download;
 
     /**
      * 游戏大小

@@ -1,7 +1,10 @@
 package com.liao27.controller;
 
 import com.liao27.exceptions.BusinessException;
+import com.liao27.model.dto.CategoryBean;
+import com.liao27.model.dto.GameBean;
 import com.liao27.model.dto.GameReq;
+import com.liao27.model.entity.Category;
 import com.liao27.services.CategoryService;
 import com.liao27.services.GameService;
 import lombok.extern.slf4j.Slf4j;
@@ -27,7 +30,7 @@ public class GameController {
     @Autowired
     private CategoryService categoryService;
 
-    @RequestMapping(path = {"/list","/",""})
+    @RequestMapping(path = {"/list", "/", ""})
     public ModelAndView manage(ModelAndView model) {
         model.addObject("allGames", this.gameService.findAll());
         model.addObject("allCategories", this.categoryService.findAll());
@@ -37,8 +40,15 @@ public class GameController {
 
 
     @RequestMapping("/show/{gameId}")
-    public ModelAndView showGame(ModelAndView model, @PathVariable("gameId") Long gameId){
-        model.addObject("game",this.gameService.getGame(gameId));
+    public ModelAndView showGame(ModelAndView model, @PathVariable("gameId") Long gameId) {
+        GameBean gameBean = this.gameService.getGame(gameId);
+        if (gameBean != null) {
+            model.addObject("game", gameBean);
+            if (gameBean.getCategory() != null && gameBean.getCategory().getId() > 0) {
+                model.addObject("recommend", this.gameService.recommend(gameBean.getCategory().getId(), gameBean.getId()));
+            }
+        }
+
         model.setViewName("details");
         return model;
     }
@@ -49,18 +59,31 @@ public class GameController {
             @RequestParam("video") MultipartFile video,
             @RequestParam("images") MultipartFile[] images,
             @RequestParam String name,
+            @RequestParam String download,
             @RequestParam Long categoryId,
             @RequestParam String size,
             @RequestParam String details,
             @RequestParam String descriptions,
+            @RequestParam Float starTotal,
+            @RequestParam String versionInfo,
             ModelAndView model
     ) {
+        GameBean gameBean = new GameBean();
+        gameBean.setName(name);
+        gameBean.setDownload(download);
+        gameBean.setSize(size);
+        gameBean.setDescriptions(descriptions);
+        gameBean.setDetails(details);
+        gameBean.setStarTotal(starTotal);
+        gameBean.setVersionInfo(versionInfo);
+
+        if (categoryId != null && categoryId > 0) {
+            gameBean.setCategory(new CategoryBean(categoryId));
+        }
+
         try {
-            gameService.addGame(logo, video, images, name, categoryId, size, details, descriptions);
+            gameService.addGame(logo, video, images, gameBean);
             model.addObject("msg_add", "分类 " + name + " 添加成功");
-        } catch (BusinessException e) {
-            log.error(e.getMessage());
-            model.addObject("error_add", e.getMessage());
         } catch (Exception e) {
             log.error(e.getMessage());
             model.addObject("error_add", e.getMessage());
