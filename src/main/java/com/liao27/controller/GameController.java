@@ -15,6 +15,8 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by main on 2018/5/4.
@@ -29,6 +31,15 @@ public class GameController {
 
     @Autowired
     private CategoryService categoryService;
+
+
+    @ResponseBody
+    @RequestMapping("/search")
+    public List<GameBean> search(@RequestBody Map<String,String> params) {
+
+        return null;
+    }
+
 
     @RequestMapping(path = {"/list", "/", ""})
     public ModelAndView manage(ModelAndView model) {

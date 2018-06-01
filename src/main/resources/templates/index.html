@@ -5,8 +5,8 @@
     <title>Game</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
     <!-- Bootstrap -->
-    <link href="//cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" rel="stylesheet"/>
-    <link href="//cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" rel="stylesheet"/>
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"/>
     <link th:href="@{/vendor/Font-Awesome-3.2.1/css/font-awesome.min.css}" th:rel="stylesheet"/>
     <link th:href="@{/css/base.css}" th:rel="stylesheet"/>
 </head>
@@ -14,7 +14,28 @@
 
 <div class="container-fluid" style="margin: 20px 20px 20px 20px;">
     <div class="row">
-        <input type="text" class="form-control" placeholder="大家都在搜索小游戏"/>
+        <input type="text" class="form-control" placeholder="大家都在搜索小游戏" id="search"/>
+    </div>
+    <div class="row" th:if="${indexBean.gameList2.size() > 0}" style="padding-top: 8px" id="search_result">
+        <ul class="media-list">
+            <li class="media" th:each="game : ${indexBean.gameList2}">
+                <div class="media-left">
+                    <a href="#" th:href="|@{/game/show}/${game.id}|">
+                        <img class="media-object" th:src="|@{/}html/${game.logo}|" style="width: 64px; height: 64px; border-radius: 10px;"/>
+                    </a>
+                </div>
+                <div class="media-body" style="vertical-align: middle;">
+                    <h4 class="media-heading" th:text="${game.name}">龙神契约</h4>
+                    <span th:text="${game.details}">童年回忆 | 官方正版 | 一名通关</span>
+                </div>
+                <div class="media-right media-middle">
+                    <div class="media-right media-middle">
+                        <a href="#" th:href="|@{/game/show}/${game.id}|" class="btn btn-default">进入</a>
+
+                    </div>
+                </div>
+            </li>
+        </ul>
     </div>
     <div class="row" style="padding-top: 8px;">
         <div class="btn-group btn-group-justified" role="group" aria-label="Justified button group" >
@@ -47,7 +68,10 @@
                     <span th:text="${game.details}">童年回忆 | 官方正版 | 一名通关</span>
                 </div>
                 <div class="media-right media-middle">
-                    <input class="btn btn-default" type="button" value="进入"/>
+                    <div class="media-right media-middle">
+                        <a href="#" th:href="|@{/game/show}/${game.id}|" class="btn btn-default">进入</a>
+
+                    </div>
                 </div>
             </li>
         </ul>
@@ -68,7 +92,10 @@
                     <span th:text="${game.details}">童年回忆 | 官方正版 | 一名通关</span>
                 </div>
                 <div class="media-right media-middle">
-                    <input class="btn btn-default" type="button" value="进入"/>
+                    <div class="media-right media-middle">
+                        <a href="#" th:href="|@{/game/show}/${game.id}|" class="btn btn-default">进入</a>
+
+                    </div>
                 </div>
             </li>
         </ul>
@@ -77,10 +104,16 @@
 </div>
 
 <!-- jQuery -->
-<script src="//cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
-<script src="//cdn.bootcss.com/jquery-resize/1.1/jquery.ba-resize.min.js"></script>
-<script src="//cdn.bootcss.com/jquery-migrate/1.3.0/jquery-migrate.min.js"></script>
-<script src="//cdn.bootcss.com/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
-<script src="//cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
+<script src="https://cdn.bootcss.com/jquery-resize/1.1/jquery.ba-resize.min.js"></script>
+<script src="https://cdn.bootcss.com/jquery-migrate/1.3.0/jquery-migrate.min.js"></script>
+<script src="https://cdn.bootcss.com/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script th:src="@{/js/index.js}"></script>
+<script th:inline="javascript">
+    $(function () {
+        new Index([[@{/game/search}]]).init();
+    });
+</script>
 </body>
 </html>

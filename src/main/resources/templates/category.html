@@ -6,8 +6,8 @@
     <title>Game</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
     <!-- Bootstrap -->
-    <link href="//cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" rel="stylesheet"/>
-    <link href="//cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" rel="stylesheet"/>
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"/>
     <link th:href="@{/vendor/Font-Awesome-3.2.1/css/font-awesome.min.css}" th:rel="stylesheet"/>
     <link th:href="@{/css/base.css}" rel="stylesheet"/>
     <link th:href="@{/css/category.css}" rel="stylesheet"/>
@@ -41,7 +41,8 @@
                         <span th:text="${game.details}">让玩家获得超越观看3D电影的真实体验！</span>
                     </div>
                     <div class="media-right media-middle">
-                        <input class="btn btn-default" type="button" value="进入"/>
+                        <a href="#" th:href="|@{/game/show}/${game.id}|" class="btn btn-default">进入</a>
+
                     </div>
                 </li>
             </ul>
@@ -50,10 +51,10 @@
 </div>
 
 <!-- jQuery -->
-<script src="//cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
-<script src="//cdn.bootcss.com/jquery-resize/1.1/jquery.ba-resize.min.js"></script>
-<script src="//cdn.bootcss.com/jquery-migrate/1.3.0/jquery-migrate.min.js"></script>
-<script src="//cdn.bootcss.com/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
-<script src="//cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
+<script src="https://cdn.bootcss.com/jquery-resize/1.1/jquery.ba-resize.min.js"></script>
+<script src="https://cdn.bootcss.com/jquery-migrate/1.3.0/jquery-migrate.min.js"></script>
+<script src="https://cdn.bootcss.com/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </body>
 </html>

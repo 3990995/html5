@@ -1,5 +1,6 @@
 package com.liao27.controller;
 
+import com.liao27.model.dto.GameBean;
 import com.liao27.model.dto.IndexBean;
 import com.liao27.model.entity.Index;
 import com.liao27.services.CategoryService;
@@ -10,9 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
