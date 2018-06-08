@@ -56,4 +56,10 @@ public interface GameRepository extends JpaRepository<Game, Long> {
     @EntityGraph(value = "graph.Game.images", type = EntityGraph.EntityGraphType.FETCH)
     Page<Game> findAll(Pageable pageable);
 
+    /**
+     * 根据游戏名字模糊查询
+     * @param keyword 游戏名字
+     * @return 游戏列表
+     */
+    List<Game> findByNameContaining(String keyword);
 }

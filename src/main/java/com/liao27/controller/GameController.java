@@ -1,13 +1,12 @@
 package com.liao27.controller;
 
 import com.liao27.exceptions.BusinessException;
-import com.liao27.model.dto.CategoryBean;
-import com.liao27.model.dto.GameBean;
-import com.liao27.model.dto.GameReq;
+import com.liao27.model.dto.*;
 import com.liao27.model.entity.Category;
 import com.liao27.services.CategoryService;
 import com.liao27.services.GameService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -35,9 +34,15 @@ public class GameController {
 
     @ResponseBody
     @RequestMapping("/search")
-    public List<GameBean> search(@RequestBody Map<String,String> params) {
-
-        return null;
+    public AckBean search(@RequestBody Map<String,String> params) {
+        String keyword = params.get("keyword");
+        if (Strings.isNotBlank(keyword)){
+            List<GameBean> list = gameService.findAllByName(keyword);
+            AckBean ack = AckBean.build(Constants.success);
+            ack.getExtraMap().put("list",list);
+            return ack;
+        }
+        return AckBean.build(Constants.err);
     }
 
 

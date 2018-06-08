@@ -65,4 +65,11 @@ public interface GameService {
      * @return 游戏数据
      */
     GameBean getGame(Long gameId);
+
+    /**
+     * 根据游戏名查找
+     * @param keyword 游戏名关键字
+     * @return 游戏列表
+     */
+    List<GameBean> findAllByName(String keyword);
 }

@@ -126,4 +126,10 @@ public class GameServiceImpl implements GameService {
     public GameBean getGame(Long gameId) {
         return GameBean.build(gameRepository.getOne(gameId));
     }
+
+    @Override
+    public List<GameBean> findAllByName(String keyword) {
+        List<Game> list = gameRepository.findByNameContaining(keyword);
+        return GameBean.builds(list);
+    }
 }
