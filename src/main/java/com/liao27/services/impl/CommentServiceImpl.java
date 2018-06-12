@@ -18,6 +18,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -61,6 +62,7 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
     public CommentBean addComment(MultipartFile headImage, Type type, String name, String content, Float star, Long gameId) throws BusinessException, IOException {
         if (gameId == null || gameId <= 0){
             throw new IllegalArgumentException("gameId 参数值无效");

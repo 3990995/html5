@@ -32,7 +32,7 @@ public class Category {
     /**
      * 类别序列
      */
-    @Column
+    @Column(name = "sort_index")
     private Long index;
 
     /**

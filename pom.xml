@@ -4,11 +4,11 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.liao27</groupId>
-	<artifactId>gamepage</artifactId>
+	<artifactId>h5</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
 
-	<name>gamepage</name>
+	<name>h5</name>
 	<description>Game web pages</description>
 
 	<parent>

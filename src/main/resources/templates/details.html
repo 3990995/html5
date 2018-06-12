@@ -109,10 +109,10 @@
             </div>
         </div>
     </div>
-    <div class="row" style="border-top: 1px solid #eee;margin-top: 16px" th:if="${recommend != null}">
+    <div class="row" style="border-top: 1px solid #eee;margin-top: 16px" th:if="${recommend != null && recommend.size() > 0}">
         <h5>你也适合玩</h5>
     </div>
-    <div class="row" th:if="${recommend != null}">
+    <div class="row" th:if="${recommend != null and recommend.size() > 0}">
         <div class="col-md-3 col-xs-3 col-xs-3" style="align-content: center" th:each="g:${recommend}">
             <img class="media-object img-circle"
                  th:src="|@{/html/}${g.logo}|"

@@ -30,6 +30,7 @@ public class CategoryServiceImpl implements CategoryService {
     private CategoryRepository categoryRepository;
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
     public Category addCategory(Category category) throws BusinessException {
         if (categoryRepository.findFirstByName(category.getName()) != null) {
             throw new BusinessException("分类已经存在");
