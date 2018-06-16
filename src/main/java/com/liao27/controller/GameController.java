@@ -3,6 +3,8 @@ package com.liao27.controller;
 import com.liao27.exceptions.BusinessException;
 import com.liao27.model.dto.*;
 import com.liao27.model.entity.Category;
+import com.liao27.permission.PermissionConstants;
+import com.liao27.permission.RequiredPermission;
 import com.liao27.services.CategoryService;
 import com.liao27.services.GameService;
 import lombok.extern.slf4j.Slf4j;
@@ -47,6 +49,7 @@ public class GameController {
 
 
     @RequestMapping(path = {"/list", "/", ""})
+    @RequiredPermission(PermissionConstants.ADMIN_PAGE)
     public ModelAndView manage(ModelAndView model) {
         model.addObject("allGames", this.gameService.findAll());
         model.addObject("allCategories", this.categoryService.findAll());
@@ -70,6 +73,7 @@ public class GameController {
     }
 
     @RequestMapping(value = "/save", method = {RequestMethod.POST})
+    @RequiredPermission(PermissionConstants.ADMIN_PAGE)
     public ModelAndView addGame(
             @RequestParam("logo") MultipartFile logo,
             @RequestParam("video") MultipartFile video,
@@ -110,6 +114,7 @@ public class GameController {
     }
 
     @RequestMapping(value = "/remove", params = {"removeId"})
+    @RequiredPermission(PermissionConstants.ADMIN_PAGE)
     public ModelAndView removeRow(ModelAndView model, final GameReq gameReq, final HttpServletRequest req) {
         boolean flag;
         final Long removeId = Long.valueOf(req.getParameter("removeId"));

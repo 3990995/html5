@@ -24,18 +24,6 @@ public class IndexBean {
 
     private Long id;
 
-    @NotNull
-    private CategoryBean category1;
-
-    @NotNull
-    private CategoryBean category2;
-
-    @NotNull
-    private CategoryBean category3;
-
-    @NotNull
-    private CategoryBean category4;
-
     /**
      * 首页第一部分的游戏列表
      */
@@ -67,19 +55,6 @@ public class IndexBean {
         }
         IndexBean indexBean = new IndexBean();
         BeanUtils.copyProperties(index,indexBean,"gameList1","gameList2");
-
-        if (index.getCategory1() != null){
-            indexBean.setCategory1(CategoryBean.build(index.getCategory1()));
-        }
-        if (index.getCategory2() != null){
-            indexBean.setCategory2(CategoryBean.build(index.getCategory2()));
-        }
-        if (index.getCategory3() != null){
-            indexBean.setCategory3(CategoryBean.build(index.getCategory3()));
-        }
-        if (index.getCategory4() != null){
-            indexBean.setCategory4(CategoryBean.build(index.getCategory4()));
-        }
 
         indexBean.setGameList1(GameBean.builds(index.getGameList1()));
         indexBean.setGameList2(GameBean.builds(index.getGameList2()));

@@ -5,6 +5,8 @@ import com.liao27.model.dto.CategoryBean;
 import com.liao27.model.dto.CategoryReq;
 import com.liao27.model.dto.GameBean;
 import com.liao27.model.entity.Category;
+import com.liao27.permission.PermissionConstants;
+import com.liao27.permission.RequiredPermission;
 import com.liao27.services.CategoryService;
 import com.liao27.services.GameService;
 import lombok.extern.slf4j.Slf4j;
@@ -62,6 +64,7 @@ public class CategoryController {
     }
 
     @RequestMapping(value = "/list")
+    @RequiredPermission(PermissionConstants.ADMIN_PAGE)
     public ModelAndView manage(final CategoryReq categoryReq, ModelAndView model) {
         model.addObject("options", categoryService.getIndexs());
         model.setViewName("/category_manage");
@@ -70,6 +73,7 @@ public class CategoryController {
 
 
     @RequestMapping(value = "/save", method = {RequestMethod.POST})
+    @RequiredPermission(PermissionConstants.ADMIN_PAGE)
     public ModelAndView addCategory(ModelAndView model, @Valid @ModelAttribute(value = "categoryReq") CategoryReq categoryReq) {
         Category category = new Category();
         BeanUtils.copyProperties(categoryReq, category);
@@ -90,6 +94,7 @@ public class CategoryController {
     }
 
     @RequestMapping(value = "/remove", params = {"removeId"})
+    @RequiredPermission(PermissionConstants.ADMIN_PAGE)
     public ModelAndView removeRow(ModelAndView model, final CategoryReq categoryReq, final HttpServletRequest req) {
         boolean flag;
         final Long removeId = Long.valueOf(req.getParameter("removeId"));

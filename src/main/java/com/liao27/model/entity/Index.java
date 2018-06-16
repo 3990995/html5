@@ -23,29 +23,10 @@ public class Index {
     private Long id;
 
     /**
-     * 首页顶部的4个类别
-     */
-    @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name="category1_id")
-    private Category category1;
-
-    @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name="category2_id")
-    private Category category2;
-
-    @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name="category3_id")
-    private Category category3;
-
-    @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name="category4_id")
-    private Category category4;
-
-    /**
      * 首页第一部分的游戏列表
      */
     @OneToMany(fetch = FetchType.EAGER ,cascade = CascadeType.ALL,mappedBy = "index1")
-    private Set<Game> gameList1;
+    private Set<Game> gameList1 = Sets.newHashSet();
 
     /**
      * 首页第2部分的游戏列表[精品推荐]

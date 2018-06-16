@@ -66,30 +66,6 @@ public class IndexServiceImpl implements IndexService {
         }
 
         if (entity.getId() > 0){
-            if (indexBean.getCategory1().getId() != null) {
-                Category category = categoryRepository.getOne(indexBean.getCategory1().getId());
-                entity.setCategory1(category);
-            } else {
-                entity.setCategory1(null);
-            }
-            if (indexBean.getCategory2().getId() != null) {
-                Category category = categoryRepository.getOne(indexBean.getCategory2().getId());
-                entity.setCategory2(category);
-            } else {
-                entity.setCategory2(null);
-            }
-            if (indexBean.getCategory3().getId() != null) {
-                Category category = categoryRepository.getOne(indexBean.getCategory3().getId());
-                entity.setCategory3(category);
-            } else {
-                entity.setCategory3(null);
-            }
-            if (indexBean.getCategory4().getId() != null) {
-                Category category = categoryRepository.getOne(indexBean.getCategory4().getId());
-                entity.setCategory4(category);
-            } else {
-                entity.setCategory4(null);
-            }
             entity.setGameList1(this.findGamesByList(indexBean.getGameList1(),entity,1));
             entity.setGameList2(this.findGamesByList(indexBean.getGameList2(),entity,2));
             indexRepository.saveAndFlush(entity);

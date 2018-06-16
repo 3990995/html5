@@ -82,6 +82,12 @@ public class GameBean implements Comparable<GameBean> {
      */
     private List<CommentBean> commentList = Lists.newArrayList();
 
+    /**
+     * 是否被选中，用在 index 配置页面
+     */
+    private boolean checked1;
+    private boolean checked2;
+
     public String getVersionInfo(){
         if (Strings.isEmpty(this.versionInfo)){
             return "最新版本：9.2 近7天：9.3 Android：9.5 iOS：9.4";

@@ -1,11 +1,13 @@
 package com.liao27.config;
 
+import com.liao27.permission.SecurityInterceptor;
 import lombok.extern.slf4j.Slf4j;
 import org.h2.server.web.WebServlet;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 
@@ -39,6 +41,13 @@ public class AppConfig extends WebMvcConfigurationSupport {
         registry.addResourceHandler("/js/**").addResourceLocations("classpath:/static/js/");
     }
 
+    @Override
+    protected void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(securityInterceptor())
+                .excludePathPatterns("/static/*")
+                .excludePathPatterns("/error")
+                .addPathPatterns("/**");
+    }
 
     @Bean
     ServletRegistrationBean H2ServletRegistrationBean() {
@@ -47,5 +56,9 @@ public class AppConfig extends WebMvcConfigurationSupport {
         return bean;
     }
 
+    @Bean
+    public SecurityInterceptor securityInterceptor() {
+        return new SecurityInterceptor();
+    }
 
 }

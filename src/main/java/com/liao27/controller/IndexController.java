@@ -3,6 +3,8 @@ package com.liao27.controller;
 import com.liao27.model.dto.GameBean;
 import com.liao27.model.dto.IndexBean;
 import com.liao27.model.entity.Index;
+import com.liao27.permission.PermissionConstants;
+import com.liao27.permission.RequiredPermission;
 import com.liao27.services.CategoryService;
 import com.liao27.services.GameService;
 import com.liao27.services.IndexService;
@@ -41,15 +43,31 @@ public class IndexController {
     }
 
     @RequestMapping("/index")
+    @RequiredPermission(PermissionConstants.ADMIN_PAGE)
     public ModelAndView manage(ModelAndView model){
-        model.addObject("indexBean",this.indexService.getIndex());
+        IndexBean ib = this.indexService.getIndex();
+        model.addObject("indexBean",ib);
         model.addObject("allCategories", this.categoryService.findAll());
-        model.addObject("allGames", this.gameService.findAll());
+        List<GameBean> list = this.gameService.findAll();
+        for (GameBean gb : list) {
+            for (GameBean g1: ib.getGameList1()) {
+                if (g1.getId() != null && g1.getId().equals(gb.getId())){
+                     gb.setChecked1(true);
+                }
+            }
+            for (GameBean g2: ib.getGameList2()){
+                if (g2.getId() != null && g2.getId().equals(gb.getId())){
+                    gb.setChecked2(true);
+                }
+            }
+        }
+        model.addObject("allGames", list);
         model.setViewName("index_manage");
         return model;
     }
 
     @RequestMapping("/index/config")
+    @RequiredPermission(PermissionConstants.ADMIN_PAGE)
     public ModelAndView config(@Valid @ModelAttribute IndexBean indexBean, ModelAndView model, BindingResult br){
         if(br.hasErrors()) {
             //如果有错误直接跳转到add视图
