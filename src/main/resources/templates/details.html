@@ -3,7 +3,7 @@
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
     <meta charset="UTF-8"/>
-    <title>Game</title>
+    <title th:text="${game.name}">Game</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
     <!-- Bootstrap -->
     <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" rel="stylesheet"/>
@@ -51,21 +51,21 @@
     </div>
     <div class="row" style="padding-top: 8px;">
         <ul class="nav nav-tabs togglable-tabs" role="tablist">
-            <li role="presentation" class=""><a href="#home" role="tab" data-toggle="tab" aria-controls="home"
+            <li role="presentation" class="active"><a href="#home" role="tab" data-toggle="tab" aria-controls="home"
                                                 aria-expanded="true">详情</a></li>
-            <li role="presentation" class="active"><a href="#profile" role="tab" data-toggle="tab"
+            <li role="presentation" class=""><a href="#profile" role="tab" data-toggle="tab"
                                                       aria-controls="profile" aria-expanded="false">评价</a></li>
             <li role="presentation" class=""><a href="#dropdown1" role="tab" data-toggle="tab" aria-controls="profile"
                                                 aria-expanded="false">部落</a></li>
         </ul>
         <div class="tab-content">
-            <div role="tabpanel" class="tab-pane fade " id="home" aria-labelledby="home-tab" style="padding-top: 10px">
+            <div role="tabpanel" class="tab-pane fade active in" id="home" aria-labelledby="home-tab" style="padding-top: 10px">
                 <p th:text="${game.descriptions}">游戏介绍</p>
             </div>
-            <div role="tabpanel" class="tab-pane active fade in" id="profile" aria-labelledby="profile-tab"
+            <div role="tabpanel" class="tab-pane fade" id="profile" aria-labelledby="profile-tab"
                  style="padding-top: 10px">
-                <input id="input-id" type="text" value="9.5" th:value="${game.starTotal}" data-size="xs"/>
-                <div class="caption" id="star-caption"><span class="label label-default" th:text="${game.starTotal}"> 7.5 </span>
+                <input id="input-id" type="text" value="4.5" th:value="${game.starTotal}" data-size="xs"/>
+                <div class="caption" id="star-caption"><span class="label label-default" th:text="${game.starTotal}"> 4.5 </span>
                 </div>
                 <div class="text-muted" th:text="${game.versionInfo}"
                      style="border-bottom: 1px solid #eee;padding-bottom: 15px">最新版本：9.2 近7天：9.3
@@ -123,7 +123,7 @@
 <div class="panel panel-default"
      style="position:fixed;bottom:0;margin-bottom:0;width: 100%;-webkit-border-radius:0 ;-moz-border-radius:0 ;border-radius: 0;">
     <div class="panel-body">
-        <a th:href="${game.download}" target="_blank" class="btn btn-success btn-lg" style="width: 100%">下载</a>
+        <a th:href="${game.download}" target="_blank" class="btn btn-success btn-lg" style="width: 100%">进入</a>
     </div>
 </div>
 
