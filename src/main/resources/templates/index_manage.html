@@ -60,7 +60,7 @@
                                 <input type="checkbox" th:field="*{gameList1[__${gameStat.index}__].id}" th:value="${game.id}" th:checked="${game.checked1}"/>
                                 <span th:text="${game.name}"></span>
                             </label>
-                            <div th:text="|${game.id}:*{gameList1[__${gameStat.index}__].id} ${gameStat.index} - ${game.checked1}|"></div>
+                            <!--<div th:text="|${game.id}:*{gameList1[__${gameStat.index}__].id} ${gameStat.index} - ${game.checked1}|"></div>-->
                         </div>
                     </div>
                 </div>
@@ -72,7 +72,7 @@
                                 <input type="checkbox" th:field="*{gameList2[__${gameStat.index}__].id}" th:value="${game.id}" th:checked="${game.checked2}"/>
                                 <span th:text="${game.name}"></span>
                             </label>
-                            <div th:text="|${game.id}:*{gameList2[__${gameStat.index}__].id} ${gameStat.index} - ${game.checked2}|"></div>
+                            <!--<div th:text="|${game.id}:*{gameList2[__${gameStat.index}__].id} ${gameStat.index} - ${game.checked2}|"></div>-->
                         </div>
                     </div>
                 </div>

@@ -49,18 +49,18 @@ public class IndexController {
         model.addObject("indexBean",ib);
         model.addObject("allCategories", this.categoryService.findAll());
         List<GameBean> list = this.gameService.findAll();
-        for (GameBean gb : list) {
-            for (GameBean g1: ib.getGameList1()) {
-                if (g1.getId() != null && g1.getId().equals(gb.getId())){
-                     gb.setChecked1(true);
-                }
-            }
-            for (GameBean g2: ib.getGameList2()){
-                if (g2.getId() != null && g2.getId().equals(gb.getId())){
-                    gb.setChecked2(true);
-                }
-            }
-        }
+//        for (GameBean gb : list) {
+//            for (GameBean g1: ib.getGameList1()) {
+//                if (g1.getId() != null && g1.getId().equals(gb.getId())){
+//                     gb.setChecked1(true);
+//                }
+//            }
+//            for (GameBean g2: ib.getGameList2()){
+//                if (g2.getId() != null && g2.getId().equals(gb.getId())){
+//                    gb.setChecked2(true);
+//                }
+//            }
+//        }
         model.addObject("allGames", list);
         model.setViewName("index_manage");
         return model;

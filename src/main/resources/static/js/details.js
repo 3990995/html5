@@ -26,7 +26,7 @@ Details.prototype.init = function () {
     $('<span>总评分：</span>').insertBefore(starEl);
     $('#star-caption').insertAfter(starEl);
 
-    $('.stars').rating({displayOnly:true,showClear:false,max:10});
+    $('.stars').rating({displayOnly:true,showClear:false,max:5});
 };
 
 $(function(){

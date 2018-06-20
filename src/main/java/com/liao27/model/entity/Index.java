@@ -25,13 +25,17 @@ public class Index {
     /**
      * 首页第一部分的游戏列表
      */
-    @OneToMany(fetch = FetchType.EAGER ,cascade = CascadeType.ALL,mappedBy = "index1")
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "t_index_game1",joinColumns = @JoinColumn(name = "game_id"))
+    @Column(name = "lists")
     private Set<Game> gameList1 = Sets.newHashSet();
 
     /**
      * 首页第2部分的游戏列表[精品推荐]
      */
-    @OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL,mappedBy = "index2")
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "t_index_game2",joinColumns = @JoinColumn(name = "game_id"))
+    @Column(name = "lists")
     private Set<Game> gameList2 = Sets.newHashSet();
 
 }

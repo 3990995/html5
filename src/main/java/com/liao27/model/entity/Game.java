@@ -100,20 +100,6 @@ public class Game {
     @Column(name = "images")
     private Set<String> images = Sets.newHashSet();
 
-    /**
-     * 第一部分推荐
-     */
-    @ManyToOne(cascade = {CascadeType.REFRESH, CascadeType.MERGE})
-    @JoinColumn(name = "index1_id")
-    private Index index1;
-
-
-    /**
-     * 第2部分推荐
-     */
-    @ManyToOne(cascade = {CascadeType.REFRESH, CascadeType.MERGE})
-    @JoinColumn(name = "index2_id")
-    private Index index2;
 
     /**
      * 评论列表
