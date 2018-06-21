@@ -1,5 +1,6 @@
 package com.liao27.controller;
 
+import com.google.common.collect.Lists;
 import com.liao27.model.dto.GameBean;
 import com.liao27.model.dto.IndexBean;
 import com.liao27.model.entity.Index;
@@ -45,10 +46,30 @@ public class IndexController {
     @RequestMapping("/index")
     @RequiredPermission(PermissionConstants.ADMIN_PAGE)
     public ModelAndView manage(ModelAndView model){
-        IndexBean ib = this.indexService.getIndex();
-        model.addObject("indexBean",ib);
         model.addObject("allCategories", this.categoryService.findAll());
         List<GameBean> list = this.gameService.findAll();
+
+        IndexBean ib = this.indexService.getIndex();
+
+        List<GameBean> list1 = Lists.newArrayList();
+        List<GameBean> list2 = Lists.newArrayList();
+
+        for (GameBean gb : list){
+            if (ib.getGameList1().contains(gb)){
+                list1.add(gb);
+            }else{
+                list1.add(new GameBean());
+            }
+            if (ib.getGameList2().contains(gb)){
+                list2.add(gb);
+            }else{
+                list2.add(new GameBean());
+            }
+        }
+        ib.setGameList1(list1);
+        ib.setGameList2(list2);
+        model.addObject("indexBean",ib);
+
 //        for (GameBean gb : list) {
 //            for (GameBean g1: ib.getGameList1()) {
 //                if (g1.getId() != null && g1.getId().equals(gb.getId())){

@@ -31,9 +31,6 @@ public class IndexServiceImpl implements IndexService {
     private IndexRepository indexRepository;
 
     @Autowired
-    private CategoryRepository categoryRepository;
-
-    @Autowired
     private GameRepository gameRepository;
 
     @Override
@@ -59,38 +56,30 @@ public class IndexServiceImpl implements IndexService {
             indexRepository.saveAndFlush(entity);
         }
 
-//        if (entity.getId() > 0){
-//            entity.setGameList1(this.findGamesByList(indexBean.getGameList1(),entity,1));
-//            entity.setGameList2(this.findGamesByList(indexBean.getGameList2(),entity,2));
-//            indexRepository.saveAndFlush(entity);
-//        }
+        if (entity.getId() > 0){
+            entity.getGameList1().clear();
+            entity.getGameList1().addAll(this.findGamesByList(indexBean.getGameList1()));
+            entity.getGameList2().clear();
+            entity.getGameList2().addAll(this.findGamesByList(indexBean.getGameList2()));
+            indexRepository.saveAndFlush(entity);
+        }
 
         return IndexBean.build(entity);
     }
 
-//    private Set<Game> findGamesByList(List<GameBean> list,Index refIndex,int index){
-//        Set sets = Sets.newHashSet();
-//        for (GameBean gb : list) {
-//            if (gb.getId() != null && gb.getId() > 0){
-//                sets.add(gb.getId());
-//            }
-//        }
-//        if (sets.size() > 0){
-//            List<Game> lists = gameRepository.findAllById(sets);
-//            for (Game game : lists) {
-//                switch (index){
-//                    case 1:
-//                        game.setIndex1(refIndex);
-//                        break;
-//                    case 2:
-//                        game.setIndex2(refIndex);
-//                        break;
-//                }
-//            }
-//            if (lists.size() > 0) {
-//                return Sets.newHashSet(lists);
-//            }
-//        }
-//        return null;
-//    }
+    private Set<Game> findGamesByList(List<GameBean> list){
+        Set sets = Sets.newHashSet();
+        for (GameBean gb : list) {
+            if (gb.getId() != null && gb.getId() > 0){
+                sets.add(gb.getId());
+            }
+        }
+        if (sets.size() > 0){
+            List<Game> lists = gameRepository.findAllById(sets);
+            if (lists.size() > 0) {
+                return Sets.newHashSet(lists);
+            }
+        }
+        return Sets.newHashSet();
+    }
 }

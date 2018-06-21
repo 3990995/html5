@@ -20,7 +20,8 @@ Details.prototype.init = function () {
     $("#input-id").rating({
         displayOnly:true,
         showClear:false,
-        max:10
+        min:0,
+        max:5
     });
     var starEl = $("#input-id").parents('div.rating-stars');
     $('<span>总评分：</span>').insertBefore(starEl);

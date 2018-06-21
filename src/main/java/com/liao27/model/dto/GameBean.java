@@ -8,8 +8,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.BeanUtils;
 
-import javax.persistence.Column;
-import java.lang.reflect.Array;
 import java.util.*;
 
 /**
@@ -82,11 +80,6 @@ public class GameBean implements Comparable<GameBean> {
      */
     private List<CommentBean> commentList = Lists.newArrayList();
 
-//    /**
-//     * 是否被选中，用在 index 配置页面
-//     */
-//    private boolean checked1;
-//    private boolean checked2;
 
     public String getVersionInfo(){
         if (Strings.isEmpty(this.versionInfo)){
@@ -139,4 +132,22 @@ public class GameBean implements Comparable<GameBean> {
     public int compareTo(GameBean o) {
         return this.getId().compareTo(o.getId());
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null){
+            return false;
+        }
+        if(obj instanceof GameBean){
+            GameBean gb = (GameBean)obj;
+            if (gb.getId() == null){
+                return false;
+            }
+            if (gb.getId().equals(this.getId())){
+                return true;
+            }
+        }
+        return false;
+    }
+
 }
