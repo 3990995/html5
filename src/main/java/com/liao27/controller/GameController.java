@@ -57,6 +57,16 @@ public class GameController {
         return model;
     }
 
+    @RequestMapping("/update/{gameId}")
+    @RequiredPermission(PermissionConstants.ADMIN_PAGE)
+    public ModelAndView update(ModelAndView model, @PathVariable("gameId") Long gameId){
+
+        model.addObject("form","update");
+        model.setViewName("redirect:/list");
+        return model;
+    }
+
+
 
     @RequestMapping("/show/{gameId}")
     public ModelAndView showGame(ModelAndView model, @PathVariable("gameId") Long gameId) {
@@ -71,6 +81,7 @@ public class GameController {
         model.setViewName("details");
         return model;
     }
+
 
     @RequestMapping(value = "/save", method = {RequestMethod.POST})
     @RequiredPermission(PermissionConstants.ADMIN_PAGE)
@@ -115,7 +126,7 @@ public class GameController {
 
     @RequestMapping(value = "/remove", params = {"removeId"})
     @RequiredPermission(PermissionConstants.ADMIN_PAGE)
-    public ModelAndView removeRow(ModelAndView model, final GameReq gameReq, final HttpServletRequest req) {
+    public ModelAndView removeRow(ModelAndView model, final HttpServletRequest req) {
         boolean flag;
         final Long removeId = Long.valueOf(req.getParameter("removeId"));
         try {
