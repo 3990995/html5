@@ -50,22 +50,18 @@ public class GameController {
 
     @RequestMapping(path = {"/list", "/", ""})
     @RequiredPermission(PermissionConstants.ADMIN_PAGE)
-    public ModelAndView manage(ModelAndView model) {
+    public ModelAndView manage(ModelAndView model,@RequestParam(required = false) String from,@RequestParam(required = false) Long gameId) {
+        if (Strings.isNotEmpty(from) && "update".equals(from)){
+            model.addObject("updateGame",this.gameService.getGame(gameId));
+            model.addObject("from",from);
+        }else{
+            model.addObject("from","add");
+        }
         model.addObject("allGames", this.gameService.findAll());
         model.addObject("allCategories", this.categoryService.findAll());
         model.setViewName("/game_manage");
         return model;
     }
-
-    @RequestMapping("/update/{gameId}")
-    @RequiredPermission(PermissionConstants.ADMIN_PAGE)
-    public ModelAndView update(ModelAndView model, @PathVariable("gameId") Long gameId){
-
-        model.addObject("form","update");
-        model.setViewName("redirect:/list");
-        return model;
-    }
-
 
 
     @RequestMapping("/show/{gameId}")

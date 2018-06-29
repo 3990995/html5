@@ -69,19 +69,6 @@ public class IndexController {
         ib.setGameList1(list1);
         ib.setGameList2(list2);
         model.addObject("indexBean",ib);
-
-//        for (GameBean gb : list) {
-//            for (GameBean g1: ib.getGameList1()) {
-//                if (g1.getId() != null && g1.getId().equals(gb.getId())){
-//                     gb.setChecked1(true);
-//                }
-//            }
-//            for (GameBean g2: ib.getGameList2()){
-//                if (g2.getId() != null && g2.getId().equals(gb.getId())){
-//                    gb.setChecked2(true);
-//                }
-//            }
-//        }
         model.addObject("allGames", list);
         model.setViewName("index_manage");
         return model;

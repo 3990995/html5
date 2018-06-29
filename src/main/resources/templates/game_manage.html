@@ -64,7 +64,7 @@
                     <td>
                         <button type="submit" class="btn btn-danger btn-xs" name="removeId" th:value="${c.id}"> 删除
                         </button>
-                        <a th:href="|@{/game/update/}${c.id}|" class="btn btn-success btn-xs"> 编辑</a>
+                        <a th:href="|@{/game/list}?from=update&gameId=${c.id}|" class="btn btn-success btn-xs"> 编辑</a>
                         <a th:href="|@{/comment/game/}${c.id}|" class="btn btn-info btn-xs"> 评论</a>
                     </td>
                 </tr>
@@ -77,7 +77,7 @@
         <p class="bg-success" th:text="${msg_add}" >...</p>
     </div>
 
-    <div class="row">
+    <div class="row" th:if="${from == 'add'}">
         <div class="bs-example" data-example-id="simple-horizontal-form">
             <form class="form-horizontal" th:action="@{/game/save}" th:method="post"
                   enctype="multipart/form-data">
@@ -188,14 +188,14 @@
         </div>
     </div>
 
-    <div class="row">
+    <div class="row" th:if="${from == 'update'}">
         <div class="bs-example" data-example-id="simple-horizontal-form">
-            <form class="form-horizontal" th:action="@{/game/save}" th:method="post"
+            <form class="form-horizontal" th:action="@{/game/update}" th:method="post" th:object="${updateGame}"
                   enctype="multipart/form-data">
                 <div class="form-group">
                     <label for="name" class="col-sm-2 control-label">游戏名称</label>
                     <div class="col-sm-10">
-                        <input type="text" name="name" id="name"
+                        <input type="text" th:field="*{name}"
                                class="form-control" placeholder="游戏名称"/>
                         <span class="help-block bg-danger" th:text="${error_add}"></span>
                     </div>
@@ -212,7 +212,7 @@
                 <div class="form-group">
                     <label for="size" class="col-sm-2 control-label">大小</label>
                     <div class="col-sm-10">
-                        <input type="text" name="size" id="size"
+                        <input type="text" th:field="*{size}"
                                class="form-control" placeholder="游戏文件尺寸大小"/>
                         <span class="help-block bg-danger"></span>
                     </div>
@@ -220,7 +220,7 @@
                 <div class="form-group">
                     <label for="details" class="col-sm-2 control-label">简单描述</label>
                     <div class="col-sm-10">
-                        <input type="text" name="details" id="details"
+                        <input type="text" th:field="*{details}"
                                class="form-control" placeholder="一句话简单介绍一下游戏"/>
                         <span class="help-block bg-danger"></span>
                     </div>
@@ -228,21 +228,21 @@
                 <div class="form-group">
                     <label for="starTotal" class="col-sm-2 control-label">总评分</label>
                     <div class="col-sm-10">
-                        <input type="number" name="starTotal" id="starTotal" max="5" min="0" value="0"
+                        <input type="number" th:field="*{starTotal}" max="5" min="0" value="0"
                                class="form-control" placeholder="5分以内"/>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="versionInfo" class="col-sm-2 control-label">版本信息</label>
                     <div class="col-sm-10">
-                        <input type="text" name="versionInfo" id="versionInfo"
+                        <input type="text" th:field="*{versionInfo}"
                                class="form-control" placeholder="例如：Android：9.5 iOS：9.4"/>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="descriptions" class="col-sm-2 control-label">游戏介绍</label>
                     <div class="col-sm-10">
-                        <textarea class="form-control" name="descriptions" id="descriptions" style="resize: none;" rows="3"
+                        <textarea class="form-control" th:field="*{descriptions}" style="resize: none;" rows="3"
                                   placeholder="游戏内容介绍"></textarea>
                         <span class="help-block bg-danger"></span>
                     </div>
@@ -250,7 +250,7 @@
                 <div class="form-group">
                     <label for="download" class="col-sm-2 control-label">游戏下载地址</label>
                     <div class="col-sm-10">
-                        <input type="text" name="download" id="download" class="form-control"/>
+                        <input type="text" th:field="*{download}" class="form-control"/>
                     </div>
                 </div>
                 <div class="form-group">
@@ -292,7 +292,7 @@
                 </div>
                 <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-10">
-                        <button type="submit" class="btn btn-success"  style="width: 100%">提交</button>
+                        <button type="submit" class="btn btn-success"  style="width: 100%">修改提交</button>
                     </div>
                 </div>
             </form>
