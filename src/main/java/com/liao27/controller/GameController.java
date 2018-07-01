@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -75,6 +76,44 @@ public class GameController {
         }
 
         model.setViewName("details");
+        return model;
+    }
+
+
+    @RequestMapping(value = "/update", method = {RequestMethod.POST})
+    @RequiredPermission(PermissionConstants.ADMIN_PAGE)
+    public ModelAndView updateGame(@RequestParam("logo") MultipartFile logo,
+                                   @RequestParam("video") MultipartFile video,
+                                   @RequestParam("images") MultipartFile[] images,
+                                   @RequestParam String name,
+                                   @RequestParam String download,
+                                   @RequestParam Long categoryId,
+                                   @RequestParam String size,
+                                   @RequestParam String details,
+                                   @RequestParam String descriptions,
+                                   @RequestParam Float starTotal,
+                                   @RequestParam String versionInfo,
+                                   @RequestParam long id,
+                                   ModelAndView model){
+        GameBean gameBean = new GameBean();
+        gameBean.setId(id);
+        gameBean.setName(name);
+        gameBean.setDownload(download);
+        gameBean.setSize(size);
+        gameBean.setDescriptions(descriptions);
+        gameBean.setDetails(details);
+        gameBean.setStarTotal(starTotal);
+        gameBean.setVersionInfo(versionInfo);
+
+        if (categoryId != null && categoryId > 0) {
+            gameBean.setCategory(new CategoryBean(categoryId));
+        }
+        try {
+            gameService.updateGame(logo,video,images,gameBean);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        model.setViewName("redirect:/game");
         return model;
     }
 

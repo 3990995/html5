@@ -47,6 +47,51 @@ public class GameServiceImpl implements GameService {
     private CategoryRepository categoryRepository;
 
 
+    private Set<String> saveImages(MultipartFile[] images) throws IOException {
+        Set<String> files = Sets.newHashSet();
+        if (null != images && images.length > 0) {
+            for (MultipartFile file : images) {
+                if (Strings.isEmpty(file.getOriginalFilename())) {
+                    continue;
+                }
+                files.add(FileUtil.saveFile(this.uploadLocation, file));
+            }
+        }
+        return files;
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public Game updateGame(MultipartFile logo, MultipartFile video, MultipartFile[] images, GameBean gameBean) throws IOException {
+        if (gameBean == null || gameBean.getId() == null) {
+            throw new IllegalArgumentException("数据不完整");
+        }
+        Game game = gameRepository.getOne(gameBean.getId());
+        BeanUtils.copyProperties(gameBean,game);
+        if (logo != null && Strings.isNotEmpty(logo.getOriginalFilename())) {
+            game.setLogo(FileUtil.saveFile(this.uploadLocation, logo));
+        }
+
+        if (video != null && Strings.isNotEmpty(video.getOriginalFilename())) {
+            game.setVideo(FileUtil.saveFile(this.uploadLocation, video));
+        }
+        Set<String> files = this.saveImages(images);
+        if (files.size() > 0) {
+            game.setImages(files);
+        }else{
+            game.setImages(null);
+        }
+
+        if (gameBean.getCategory() != null && gameBean.getCategory().getId() > 0) {
+            Category category = categoryRepository.getOne(gameBean.getCategory().getId());
+            if (category != null) {
+                game.setCategory(category);
+            }
+        }
+        gameRepository.save(game);
+        return game;
+    }
+
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public Game addGame(MultipartFile logo, MultipartFile video, MultipartFile[] images, GameBean gameBean) throws BusinessException, IOException {
@@ -69,17 +114,9 @@ public class GameServiceImpl implements GameService {
             game.setVideo(FileUtil.saveFile(this.uploadLocation, video));
         }
 
-        if (null != images && images.length > 0) {
-            Set<String> files = Sets.newHashSet();
-            for (MultipartFile file : images) {
-                if (Strings.isEmpty(file.getOriginalFilename())) {
-                    continue;
-                }
-                files.add(FileUtil.saveFile(this.uploadLocation, file));
-            }
-            if (files.size() > 0) {
-                game.setImages(files);
-            }
+        Set<String> files = this.saveImages(images);
+        if (files.size() > 0) {
+            game.setImages(files);
         }
         if (gameBean.getCategory() != null && gameBean.getCategory().getId() > 0) {
             Category category = categoryRepository.getOne(gameBean.getCategory().getId());

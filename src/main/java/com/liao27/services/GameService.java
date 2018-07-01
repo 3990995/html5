@@ -72,4 +72,15 @@ public interface GameService {
      * @return 游戏列表
      */
     List<GameBean> findAllByName(String keyword);
+
+    /**
+     * 修改游戏内容
+     * @param logo 游戏 logo
+     * @param video 游戏介绍视频
+     * @param images 游戏介绍图片
+     * @param gameBean 游戏提交数据
+     * @return 游戏实体
+     * @throws IOException       io异常
+     */
+    Game updateGame(MultipartFile logo, MultipartFile video, MultipartFile[] images, GameBean gameBean) throws IOException;
 }

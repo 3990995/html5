@@ -190,7 +190,7 @@
 
     <div class="row" th:if="${from == 'update'}">
         <div class="bs-example" data-example-id="simple-horizontal-form">
-            <form class="form-horizontal" th:action="@{/game/update}" th:method="post" th:object="${updateGame}"
+            <form class="form-horizontal" th:action="|@{/game/update}?id=*{id}|" th:method="post" th:object="${updateGame}"
                   enctype="multipart/form-data">
                 <div class="form-group">
                     <label for="name" class="col-sm-2 control-label">游戏名称</label>
@@ -204,7 +204,7 @@
                     <label for="categoryId" class="col-sm-2 control-label">所属类别</label>
                     <div class="col-sm-10">
                         <select class="form-control" name="categoryId" id="categoryId">
-                            <option th:each="opt : ${allCategories}" th:value="${opt.id}" th:text="${opt.name}">
+                            <option th:each="opt : ${allCategories}" th:value="${opt.id}" th:text="${opt.name}" th:selected="${#strings.contains(updateGame.category.id,opt.id)}">
                             </option>
                         </select>
                     </div>
